@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 
-import Home from './Home'
-import About from './About'
+import Home from './home/Home'
+import Console from './console/Console'
 
 import './index.css'
 
@@ -18,8 +18,8 @@ root.render(
                     element={<Home />}
                 />
                 <Route
-                    path="/about"
-                    element={<About />}
+                    path="/console"
+                    element={<Console />}
                 />
             </Routes>
         </BrowserRouter>
