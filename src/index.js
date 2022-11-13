@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 
-import Home from './home/Home'
-import Console from './console/Console'
+import HomePage from 'home/HomePage'
+import ConsolePage from 'console/ConsolePage'
 
 import './index.css'
 
@@ -15,11 +15,11 @@ root.render(
             <Routes>
                 <Route
                     path="/"
-                    element={<Home />}
+                    element={<HomePage />}
                 />
                 <Route
                     path="/console"
-                    element={<Console />}
+                    element={<ConsolePage />}
                 />
             </Routes>
         </BrowserRouter>
