@@ -1,7 +1,7 @@
-_self = None
-def _syncSelf(newSelf):
-    global _self
-    _self = newSelf
+_api = None
+def _syncApi(newApi):
+    global _api
+    _api = newApi
 
 def printToConsole(msg):
-    _self.printToConsole(msg)
+    _api.printToConsole(msg)

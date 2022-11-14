@@ -20,9 +20,8 @@ class ConsoleApi(ServerApi):
     def printToConsole(self, msg):
         self._msgs.append(str(msg))
 
-    def _exec_noVarsInContext(self, fileData, localVars):
-        globalVars = globals()
-        del globalVars['ServerApi']
-        del globalVars['driver']
-        del globalVars['ConsoleApi']
+    def _getGlobals(self):
+        return globals()
+
+    def _exec_noVarsInContext(self, fileData, globalVars, localVars):
         exec(fileData, globalVars, localVars)

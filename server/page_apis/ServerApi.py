@@ -3,7 +3,7 @@ import sys
 import importlib
 
 class ServerApi(ABC):
-    _logCount = 0
+    __logCount = 0
 
     def __init__(self, apiPath, driver):
         assert apiPath[0] == "/" and apiPath[-1] != "/", "Invalid api path: must start (but not end) with a slash"
@@ -29,26 +29,39 @@ class ServerApi(ABC):
 
     def post(self, queryParams, requestDict):
         self.onPost(queryParams, requestDict)
-        self._execPyFile(requestDict['pyfile'])
+        self.__execPyFile(requestDict['pyfile'])
         self._lastFileRequest = requestDict
 
-    def _execPyFile(self, fileData):
+    def __execPyFile(self, fileData):
         oldPath = sys.path
         sys.path = [f"./{self._apiPath}"]
         importlib.reload(self._driver)
-        self._driver._syncSelf(self)
+        self._driver._syncApi(self)
 
+        globalVars = dict(self._getGlobals())
+        globalsToDelete = (
+            type(self).__name__,
+            'ServerApi',
+            'driver',
+        )
+        for globalName in globalsToDelete:
+            if globalName in globalVars:
+                del globalVars[globalName]
         localVars = {
             'input': None,
-            'print': lambda msg: self._appendLog("log", msg),
+            'print': lambda msg: self.__appendLog("log", str(msg)),
         }
-        self._exec_noVarsInContext(fileData, localVars)
+        self._exec_noVarsInContext(fileData, globalVars, localVars)
         
         sys.path = oldPath
 
     @abstractmethod
-    def _exec_noVarsInContext(self, fileData, localVars):
+    def _exec_noVarsInContext(self, fileData, globalVars, localVars):
         pass # just exec(); context switch allows importing driver module
+
+    @abstractmethod
+    def _getGlobals(self, fileData, localVars):
+        pass # globals() needs to be called in correct context class
 
     # required overridable methods
     @abstractmethod
@@ -59,12 +72,12 @@ class ServerApi(ABC):
     def postAction(self, action, queryParams, requestDict):
         return # a dict or None from processing the POST request
 
-    def _appendLog(self, logType, logMsg):
+    def __appendLog(self, logType, logMsg):
         assert logType in ("log", "warn", "error", "info")
         newLog = {
             'type': logType,
             'message': logMsg,
-            'id': ServerApi._logCount,
+            'id': ServerApi.__logCount,
         }
-        ServerApi._logCount += 1
+        ServerApi.__logCount += 1
         self._logs.append(newLog)
