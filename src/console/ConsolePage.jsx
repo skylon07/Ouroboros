@@ -1,43 +1,30 @@
-import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { useRef } from 'react'
 
 import PageHeader from 'shared/PageHeader'
+import { usePageApi } from 'shared/hooks'
+
+import ConsoleApi from './ConsoleApi'
 
 export default function ConsolePage() {
-    const textRef = useRef(null)
+    const api = usePageApi(ConsoleApi)
+    const fileInputRef = useRef(null)
     const consoleRef = useRef(null)
 
-    useEffect(() => {
-        const logsPrinted = {}
-        const interval = setInterval(async () => {
-            const response = await axios.get("/console", {params: {logs: true}})
-            const logs = response.data
-            for (const log of logs) {
-                const {id, type, message} = log
-                if (!(id in logsPrinted)) {
-                    console[type](message)
-                    logsPrinted[id] = log
-                }
-            }
-        }, 500)
-        return () => clearInterval(interval)
-    }, [])
-
-    const runPython = async () => {
+    const uploadPyFile = async () => {
         consoleRef.current.value = ""
         
-        const fileData = textRef.current.value
-        await axios.post("/console", {pyfile: fileData})
-
-        const response = await axios.get("/console/messages")
-        consoleRef.current.value = response.data.messages
+        const pyFile = fileInputRef.current.files[0]
+        await api.updatePyFile(pyFile)
+        
+        const messagesStr = await api.fetchMessages()
+        consoleRef.current.value = messagesStr
     }
 
     return <div className="Console">
         <PageHeader title="Python Test Console" />
-        <textarea ref={textRef} />
-        <button onClick={runPython}>Run Python</button>
+        <input type="file" ref={fileInputRef} />
+        <button onClick={uploadPyFile}>Upload</button>
+        <br />
         <br />
         <br />
         <textarea ref={consoleRef} />
