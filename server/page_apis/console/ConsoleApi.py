@@ -7,7 +7,7 @@ class ConsoleApi(ServerApi):
         super().__init__("/console", driver)
         self._msgs = []
 
-    def onPost(self):
+    def onPost(self, queryParams, requestDict):
         self._msgs = []
 
     def getAction(self, action, queryParams):
@@ -20,9 +20,9 @@ class ConsoleApi(ServerApi):
     def printToConsole(self, msg):
         self._msgs.append(str(msg))
 
-    def _exec_noVarsInContext(self, fileData):
-        globalVars = dict(globals())
+    def _exec_noVarsInContext(self, fileData, localVars):
+        globalVars = globals()
         del globalVars['ServerApi']
-        del globalVars['ConsoleApi']
         del globalVars['driver']
-        exec(fileData, globalVars, {})
+        del globalVars['ConsoleApi']
+        exec(fileData, globalVars, localVars)

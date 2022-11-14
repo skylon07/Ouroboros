@@ -5,7 +5,7 @@ from urllib import parse
 
 from page_apis import apis_by_path
 
-HOSTNAME = "localhost"
+HOSTNAME = "0.0.0.0"
 PORT = 3001
 
 
@@ -18,16 +18,16 @@ class ServerHandler(SimpleHTTPRequestHandler):
             
             api = apis_by_path[apiPath]
             if actionPath is None:
-                responseDict = api.get(queryParams)
+                responseObj = api.get(queryParams)
             else:
-                responseDict = api.getAction(actionPath, queryParams)
-            assert type(responseDict) is dict, "Returned `responseDict` was not a dict"
+                responseObj = api.getAction(actionPath, queryParams)
+            self.check_response_obj(responseObj)
             
             self.send_response(200)
             self.send_cors_headers()
             self.end_headers()
 
-            self.write_json(responseDict)
+            self.write_json(responseObj)
         except Exception as error:
             self.send_error_response(error)
 
@@ -43,16 +43,16 @@ class ServerHandler(SimpleHTTPRequestHandler):
             
             api = apis_by_path[apiPath]
             if actionPath is None:
-                responseDict = api.post(queryParams, dataDict)
+                responseObj = api.post(queryParams, dataDict)
             else:
-                responseDict = api.postAction(actionPath, queryParams, dataDict)
-            assert responseDict is None or type(responseDict) is dict, "Returned `responseDict` was not a dict or None"
+                responseObj = api.postAction(actionPath, queryParams, dataDict)
+            self.check_response_obj(responseObj)
 
             self.send_response(200)
             self.send_cors_headers()
             self.end_headers()
 
-            self.write_json(responseDict)
+            self.write_json(responseObj)
         except Exception as error:
             self.send_error_response(error)
 
@@ -77,34 +77,37 @@ class ServerHandler(SimpleHTTPRequestHandler):
         if noActionSlash:
             apiPath = parseResult.path
             actionPath = None
-            queryParams = None
         else:
             apiPath = parseResult.path[0:actionSlashIdx]
             actionPath = parseResult.path[actionSlashIdx:]
-            if parseResult.query != "":
-                joinedQueryDict = parse.parse_qs(parseResult.query)
-                queryParams = {
-                    actionKey: actionVal
-                    for (queryKey, queryVal) in joinedQueryDict.items()
-                    for actionKey in (
-                        [queryKey]
-                        if queryKey[-2:] != "[]"
-                        else [queryKey[:-2]]
-                    )
-                    for actionVal in (
-                        [queryVal[0]]
-                        if queryKey[-2:] != "[]"
-                        else [queryVal]
-                        if queryKey[-1] != "]"
-                        else self.raise_bad_query_string(queryKey, queryVal)
-                    )
-                }
-            else:
-                queryParams = None
+        
+        if parseResult.query != "":
+            joinedQueryDict = parse.parse_qs(parseResult.query)
+            queryParams = {
+                actionKey: actionVal
+                for (queryKey, queryVal) in joinedQueryDict.items()
+                for actionKey in (
+                    [queryKey]
+                    if queryKey[-2:] != "[]"
+                    else [queryKey[:-2]]
+                )
+                for actionVal in (
+                    [queryVal[0]]
+                    if queryKey[-2:] != "[]"
+                    else [queryVal]
+                    if queryKey[-1] != "]"
+                    else self.raise_bad_query_string(queryKey, queryVal)
+                )
+            }
+        else:
+            queryParams = None
         return (apiPath, actionPath, queryParams)
 
     def raise_bad_query_string(self, queryKey, queryVal):
         raise ValueError(f"Invalid query parameter {queryKey}={queryVal}")
+
+    def check_response_obj(self, responseObj):
+        assert type(responseObj) in (dict, list, str, type(None)), "A ServerApi returned an invalid response object type"
 
     def send_cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")

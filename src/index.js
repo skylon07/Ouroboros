@@ -32,4 +32,6 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
 
-axios.defaults.baseURL = "http://localhost:3001"
+const {protocol, hostname} = window.location
+const serverPort = 3001
+axios.defaults.baseURL = `${protocol}//${hostname}:${serverPort}`
