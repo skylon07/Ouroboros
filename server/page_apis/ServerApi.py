@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import sys
 import importlib
+import traceback
 
 class ServerApi(ABC):
     __logCount = 0
@@ -51,7 +52,14 @@ class ServerApi(ABC):
             'input': None,
             'print': lambda msg: self.__appendLog("log", str(msg)),
         }
-        self._exec_noVarsInContext(fileData, globalVars, localVars)
+        try:
+            self._exec_noVarsInContext(fileData, globalVars, localVars)
+        except Exception as error:
+            rawTracebackStr = traceback.format_exc()
+            firstFileIdx = rawTracebackStr.index("File")
+            userFileIdx = rawTracebackStr.index("File \"<string>\"", firstFileIdx + 1)
+            tracebackStr = f"{rawTracebackStr[0:firstFileIdx]}{rawTracebackStr[userFileIdx:]}"
+            self.__appendLog("error", f"{type(error).__name__}: {str(error)}\n{tracebackStr}")
         
         sys.path = oldPath
 
