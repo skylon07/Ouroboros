@@ -1,32 +1,32 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 
 import PageHeader from 'shared/PageHeader'
+import PyFileUploader from 'shared/PyFileUploader'
 import { usePageApi } from 'shared/hooks'
 
 import ConsoleApi from './ConsoleApi'
 
 export default function ConsolePage() {
-    const api = usePageApi(ConsoleApi)
-    const fileInputRef = useRef(null)
-    const consoleRef = useRef(null)
+    const consoleApi = usePageApi(ConsoleApi)
+    
+    const [consoleMessages, setConsoleMessages] = useState("")
 
-    const uploadPyFile = async () => {
-        consoleRef.current.value = ""
-        
-        const pyFile = fileInputRef.current.files[0]
-        await api.updatePyFile(pyFile)
-        
-        const messagesStr = await api.fetchMessages()
-        consoleRef.current.value = messagesStr
+    const resetConsole = () => setConsoleMessages("")
+    const getConsoleMessages = async () => {
+        const messages = await consoleApi.fetchMessages()
+        setConsoleMessages(messages)
     }
 
     return <div className="Console">
         <PageHeader title="Python Test Console" />
-        <input type="file" ref={fileInputRef} />
-        <button onClick={uploadPyFile}>Upload</button>
+        <PyFileUploader
+            pageApi={consoleApi}
+            onUploadStart={resetConsole}
+            onUploadComplete={getConsoleMessages}
+        />
         <br />
         <br />
         <br />
-        <textarea ref={consoleRef} />
+        <textarea value={consoleMessages} readOnly />
     </div>
 }
