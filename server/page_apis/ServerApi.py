@@ -94,7 +94,7 @@ class ServerApi(ABC):
 
     def __checkFileDataBuiltins(self, fileData):
         badRegexes = [
-            r"((?<![_a-zA-Z0-9])(__builtins__|exec|eval|compile)(?![_a-zA-Z0-9]))",
+            r"((?<![_a-zA-Z0-9])(__builtins__|exec|eval|compile|_api|_syncApi)(?![_a-zA-Z0-9]))",
             r"(from (?!re|\.)([^\s]+) import|import (?!re|\.|driver)([^\s]+)$)"
         ]
         matches = re.findall("|".join(badRegexes), fileData)
