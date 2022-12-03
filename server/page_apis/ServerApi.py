@@ -53,11 +53,12 @@ class ServerApi(ABC):
             'print': lambda msg: self.__appendLog("log", str(msg)),
         }
         try:
+            self.__checkFileDataBuiltins(fileData)
             self._exec_noVarsInContext(fileData, globalVars, localVars)
         except Exception as error:
             rawTracebackStr = traceback.format_exc()
             firstFileIdx = rawTracebackStr.index("File")
-            userFileIdx = rawTracebackStr.index("File \"<string>\"", firstFileIdx + 1)
+            userFileIdx = rawTracebackStr.index("File \"<string>\"", firstFileIdx + 1) if "File \"<string>\"" in rawTracebackStr else 0
             tracebackStr = f"{rawTracebackStr[0:firstFileIdx]}{rawTracebackStr[userFileIdx:]}"
             self.__appendLog("error", f"{type(error).__name__}: {str(error)}\n{tracebackStr}")
         
@@ -89,3 +90,9 @@ class ServerApi(ABC):
         }
         ServerApi.__logCount += 1
         self._logs.append(newLog)
+
+    def __checkFileDataBuiltins(self, fileData):
+        import re
+        if len(re.findall(r"exec\(|eval\(|compile\(|__builtin__", fileData)) > 0:
+            print("ERROR: User tried to use a dangerous function! Exiting...")
+            exit(1)
