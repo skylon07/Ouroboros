@@ -7,7 +7,7 @@ export default class PageApi {
         if (typeof apiBase !== "string" || apiBase[0] !== "/") {
             throw new Error("A PageApi was created without a valid api base")
         }
-        this._apiBase = apiBase
+        this._apiBase = "/ouroboros-api" + apiBase
         this._consoleListener = null
         this._printedLogs = {}
     }
