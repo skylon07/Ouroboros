@@ -12,7 +12,7 @@ import './index.css'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <React.StrictMode>
-        <BrowserRouter basename='/ouroboros'>
+        <BrowserRouter basename={process.env.NODE_ENV === "production" ? '/ouroboros' : '/'}>
             <Routes>
                 <Route
                     path='/'
@@ -32,6 +32,13 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
 
-const {protocol, hostname} = window.location
-const serverPort = 30167
-axios.defaults.baseURL = `${protocol}//${hostname}:${serverPort}`
+if (process.env.NODE_ENV === "production") {
+    console.log("Using production URL...")
+
+    axios.defaults.baseURL = `https://thedelta.stream`
+} else if (process.env.NODE_ENV === "development") {
+    console.log("Using development URL...")
+    
+    const port = 30167
+    axios.defaults.baseURL = `http://localhost:${port}`
+}
