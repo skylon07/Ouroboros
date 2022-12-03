@@ -1,3 +1,4 @@
+rm -r latest-build
 npm run build
 mv build latest-build
 cp -r server latest-build

@@ -6,10 +6,14 @@ from urllib import parse
 from page_apis import apis_by_path
 
 HOSTNAME = "0.0.0.0"
+DIRECTORY = '/ouroboros-api'
 PORT = 30167
 
 
 class ServerHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=DIRECTORY, **kwargs)
+
     def do_GET(self):
         print(f"Server handling GET request to {self.path}")
         try:
@@ -67,6 +71,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
         return path
 
     def parse_request_path(self, requestPath):
+        requestPath = requestPath[len(DIRECTORY):]
         parseResult = parse.urlsplit(requestPath)
         try:
             noActionSlash = False
