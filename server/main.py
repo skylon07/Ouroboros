@@ -2,6 +2,7 @@ from http.server import SimpleHTTPRequestHandler, HTTPServer
 import json
 import traceback
 from urllib import parse
+from datetime import datetime
 
 from page_apis import apis_by_path
 
@@ -10,12 +11,16 @@ DIRECTORY = '/ouroboros-api'
 PORT = 30167
 
 
+def datestamp():
+    return datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
+
 class ServerHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
     def do_GET(self):
-        print(f"Server handling GET request to {self.path}")
+        print(f"{datestamp()} Server handling GET request to {self.path}")
         try:
             requestPath = self.assure_no_trailing_slash(self.path)
             (apiPath, actionPath, queryParams) = self.parse_request_path(requestPath)
@@ -36,7 +41,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
             self.send_error_response(error)
 
     def do_POST(self):
-        print(f"Server handling POST request to {self.path}")
+        print(f"{datestamp()} Server handling POST request to {self.path}")
         try:
             requestPath = self.assure_no_trailing_slash(self.path)
             (apiPath, actionPath, queryParams) = self.parse_request_path(requestPath)
