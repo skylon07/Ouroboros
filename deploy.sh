@@ -7,5 +7,7 @@ rm latest-build.tar.gz
 
 # on server
 # cd server/ouroboros
-# tar -xvf latest-build.tar.gz 
+# tar -xvf latest-build.tar.gz
 # rmtrash latest-build.tar.gz
+# mv latest-build/* ./
+# rm -d latest-build/
