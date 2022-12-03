@@ -33,5 +33,5 @@ root.render(
 reportWebVitals()
 
 const {protocol, hostname} = window.location
-const serverPort = 3001
+const serverPort = 30167
 axios.defaults.baseURL = `${protocol}//${hostname}:${serverPort}`
