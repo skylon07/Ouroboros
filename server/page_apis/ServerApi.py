@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import sys
 import importlib
 import traceback
+import re
 
 class ServerApi(ABC):
     __logCount = 0
@@ -92,7 +93,14 @@ class ServerApi(ABC):
         self._logs.append(newLog)
 
     def __checkFileDataBuiltins(self, fileData):
-        import re
-        if len(re.findall(r"exec\(|eval\(|compile\(|__builtin__", fileData)) > 0:
-            print("ERROR: User tried to use a dangerous function! Exiting...")
+        badRegexes = [
+            r"((?<![_a-zA-Z0-9])(__builtins__|exec|eval|compile)(?![_a-zA-Z0-9]))",
+            r"(from (?!re|\.)([^\s]+) import|import (?!re|\.|driver)([^\s]+)$)"
+        ]
+        matches = re.findall("|".join(badRegexes), fileData)
+        if len(matches) > 0:
+            print("========= FILE BEGIN =========")
+            print(fileData)
+            print("========== FILE END ==========")
+            print(f"ERROR: User tried to use a dangerous function! Exiting... ({matches})")
             exit(1)

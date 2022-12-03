@@ -17,7 +17,7 @@ export default class PageApi {
             const fileDataAsStr = await readFile(pyFile)
             return await axios.post(this._apiBase, {pyfile: fileDataAsStr})
         } catch (error) {
-            if (error.message.includes("Failed to execute 'readAsText' on 'FileReader': parameter 1 is not of type 'Blob'")) {
+            if (error?.message?.includes("Failed to execute 'readAsText' on 'FileReader': parameter 1 is not of type 'Blob'")) {
                 throw new Error("No file selected")
             } else {
                 throw error

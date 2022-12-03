@@ -6,6 +6,7 @@ from datetime import datetime
 
 from page_apis import apis_by_path
 
+
 HOSTNAME = "0.0.0.0"
 DIRECTORY = '/ouroboros-api'
 PORT = 30167
@@ -140,7 +141,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     with HTTPServer((HOSTNAME, PORT), ServerHandler) as server:
         print("Server started sucessfully!")
-        print("Access at http://{}:{}".format(HOSTNAME, PORT))
+        print(f"Access at http://{HOSTNAME}:{PORT}{DIRECTORY}")
 
         try:
             server.serve_forever()
