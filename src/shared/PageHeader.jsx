@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from "react-router-dom"
 
-import { readFile } from "shared/files"
-
 import './PageHeader.css'
 
-export default function PageHeader({title, docRef}) {
+export default function PageHeader({docRef}) {
     const [docShown, setDocShown] = useState(false)
     const showDoc = () => setDocShown(true)
     const hideDoc = () => setDocShown(false)
@@ -29,10 +27,9 @@ export default function PageHeader({title, docRef}) {
     return <div className="PageHeader">
         <div className="PageHeader-TopBar">
             <Link to="/">Back to Home</Link>
-            <spacer />
+            <div className="PageHeader-Spacer" />
             <button onClick={showDoc}>Show Driver Docs</button>
         </div>
-        <h1>{title}</h1>
         <div className={`PageHeader-DocViewer ${docVisibleClass}`}>
             <button onClick={hideDoc}>✕</button>
             <pre>{docText}</pre>
