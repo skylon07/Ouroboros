@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import PageHeader from 'shared/PageHeader'
+import PageTitle from 'shared/PageTitle'
 import PyFileUploader from 'shared/PyFileUploader'
 import { usePageApi } from 'shared/hooks'
 
@@ -21,12 +22,13 @@ export default function ConsolePage() {
     }
 
     return <div className="ConsolePage">
-        <PageHeader title="Python Test Console" docRef={driverDocs} />
+        <PageHeader docRef={driverDocs} />
         <PyFileUploader
             pageApi={consoleApi}
             onUploadStart={resetConsole}
             onUploadComplete={getConsoleMessages}
         />
+        <PageTitle   title="Python Test Console" />
         <br />
         <br />
         <br />
