@@ -15,8 +15,29 @@ body {
 }
 
 code {
+    padding: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: pre-wrap;
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+    font-size: 80%;
+    background-color: rgba(var(--color-shadow-black), 0.2);
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: rgba(var(--color-shadow-black), 0.2);
+}
+pre code {
+    display: block;
+    word-wrap: normal;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+p {
+    line-height: 150%;
 }
 
 button {
