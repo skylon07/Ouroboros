@@ -21,10 +21,10 @@ export default function HomePage() {
             application's page, and using them is simple.
             Below is an example that runs on the <em>Echo Console</em>:
             <pre>
-                <code>from . import driver    # or from .driver import printToConsole</code>
+                <code>from . import driver    # or from .driver import echo</code>
                 <code>&nbsp;</code>
                 <code>for lineIdx in range(10):</code>
-                <code>&nbsp;&nbsp;&nbsp;&nbsp;{"driver.printToConsole(f\"Hello line {lineIdx}\")"}</code>
+                <code>&nbsp;&nbsp;&nbsp;&nbsp;{"driver.echo(f\"Hello line {lineIdx}\")"}</code>
             </pre>
             <br />
             Errors are printed to the Chrome console, so make sure to keep that

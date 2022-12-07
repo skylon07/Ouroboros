@@ -3,5 +3,5 @@ def _syncApi(newApi):
     global _api
     _api = newApi
 
-def printToConsole(msg):
-    _api.printToConsole(msg)
+def echo(msg):
+    _api.echo(msg)

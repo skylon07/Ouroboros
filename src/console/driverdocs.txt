@@ -1,4 +1,4 @@
-printToConsole(msg):
+echo(msg):
     Prints a message to the console
 
     msg - A string to print to the console

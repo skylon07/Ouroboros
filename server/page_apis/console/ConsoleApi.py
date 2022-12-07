@@ -17,7 +17,7 @@ class ConsoleApi(ServerApi):
     def postAction(self, action, queryParams, requestDict):
         return None
 
-    def printToConsole(self, msg):
+    def echo(self, msg):
         self._msgs.append(str(msg))
 
     def _getGlobals(self):
