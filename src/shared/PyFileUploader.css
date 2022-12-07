@@ -1,0 +1,16 @@
+.PyFileUploader {
+    margin: 30px;
+}
+
+.PyFileUploader-Spacer {
+    height: 10px;
+}
+
+.PyFileUploader-Upload {
+    position: relative;
+    overflow: hidden;
+}
+
+.PyFileUploader-Upload input {
+    width: 0%;
+}
