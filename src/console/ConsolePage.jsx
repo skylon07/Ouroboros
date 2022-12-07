@@ -28,9 +28,7 @@ export default function ConsolePage() {
             onUploadStart={resetConsole}
             onUploadComplete={getConsoleMessages}
         />
-        <PageTitle   title="Python Test Console" />
-        <br />
-        <br />
+        <PageTitle title="Python Test Console" />
         <br />
         <textarea value={consoleMessages} readOnly />
     </div>
