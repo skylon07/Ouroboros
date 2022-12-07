@@ -10,6 +10,8 @@ export default function HomePage() {
             a <code>Python</code> backend.
             It contains several <em>applications</em> that allow you to
             program <code>react</code> applications using <code>Python</code> code!
+            <br />
+            <br />
             Each application provides a place to upload your <code>Python</code> file.
             Your file can import a <code>driver</code> module that can be
             used to interact with the <code>react</code>-side of a webpage.
@@ -19,7 +21,7 @@ export default function HomePage() {
             application's page, and using them is simple.
             Below is an example that runs on the <em>Echo Console</em>:
             <pre>
-                <code>from . import driver</code>
+                <code>from . import driver    # or from .driver import printToConsole</code>
                 <code>&nbsp;</code>
                 <code>for lineIdx in range(10):</code>
                 <code>&nbsp;&nbsp;&nbsp;&nbsp;{"driver.printToConsole(f\"Hello line {lineIdx}\")"}</code>
