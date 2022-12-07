@@ -7,5 +7,4 @@ export default function Link({to, children}) {
         <RLink to={to}>{children}</RLink>
         <div className="Link-Nonhover">{children}</div>
     </div>
-
 }
