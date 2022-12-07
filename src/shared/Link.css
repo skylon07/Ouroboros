@@ -1,0 +1,28 @@
+.Link {
+    position: relative;
+}
+
+.Link * {
+    color: rgb(var(--color-ink-blue));
+}
+
+.Link-Nonhover {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    text-decoration: underline;
+}
+.Link:hover .Link-Nonhover {
+    visibility: hidden;
+}
+
+.Link a {
+    font-weight: bolder;
+    visibility: hidden;
+}
+.Link:hover a {
+    visibility: visible;
+}
+.Link:active a {
+    background-color: rgba(var(--color-shadow-black), 0.4);
+}
