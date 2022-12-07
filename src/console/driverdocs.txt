@@ -1,2 +1,4 @@
-- this is a test
-- wow this is so cool
+printToConsole(msg):
+    Prints a message to the console
+
+    msg - A string to print to the console
