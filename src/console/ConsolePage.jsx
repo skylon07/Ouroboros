@@ -5,6 +5,9 @@ import PyFileUploader from 'shared/PyFileUploader'
 import { usePageApi } from 'shared/hooks'
 
 import ConsoleApi from './ConsoleApi'
+import driverDocs from './driverdocs.txt'
+
+import './ConsolePage.css'
 
 export default function ConsolePage() {
     const consoleApi = usePageApi(ConsoleApi)
@@ -18,7 +21,7 @@ export default function ConsolePage() {
     }
 
     return <div className="ConsolePage">
-        <PageHeader title="Python Test Console" />
+        <PageHeader title="Python Test Console" docRef={driverDocs} />
         <PyFileUploader
             pageApi={consoleApi}
             onUploadStart={resetConsole}
