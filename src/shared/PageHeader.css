@@ -1,0 +1,46 @@
+.PageHeader-TopBar {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.PageHeader-TopBar spacer {
+    width: 50px;
+}
+
+.PageHeader-DocViewer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    padding: 30px;
+    background-color: rgba(var(--color-shadow-black), 0.97);
+}
+
+.PageHeader-DocViewer.hidden {
+    display: none;
+}
+
+.PageHeader-DocViewer button {
+    padding: 0px;
+    border: 1px solid rgb(var(--color-soft-white));
+    width: 30px;
+    height: 30px;
+    border-radius: 0px;
+    color: rgb(var(--color-soft-white));
+    background-color: rgba(0, 0, 0, 0);
+}
+.PageHeader-DocViewer button:hover {
+    padding: 0px;
+    border-width: 1px;
+    opacity: 70%;
+}
+.PageHeader-DocViewer button:active {
+    padding: 0px;
+    border-width: 1px;
+    opacity: 30%;
+}
+
+.PageHeader-DocViewer pre {
+    color: rgb(var(--color-soft-white));
+}
