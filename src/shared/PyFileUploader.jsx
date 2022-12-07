@@ -10,7 +10,12 @@ export default function PyFileUploader({ pageApi, onUploadStart, onUploadComplet
     
     const [filePickerText, setFilePickerText] = useState("Choose File")
     const updateButtonText = () => {
-        setFilePickerText(`Choose File: ${fileInputRef.current.files[0].name}`)
+        const fileName = fileInputRef.current?.files[0]?.name || null
+        if (fileName !== null) {
+            setFilePickerText(`Choose File: ${fileName}`)
+        } else {
+            setFilePickerText(`Choose File`)
+        }
     }
     
     const uploadPyFile = async () => {
@@ -22,6 +27,7 @@ export default function PyFileUploader({ pageApi, onUploadStart, onUploadComplet
         const pyFile = fileInput.files[0]
         await pageApi.updatePyFile(pyFile)
         fileInput.value = ""
+        updateButtonText()
 
         if (typeof onUploadComplete === "function") {
             onUploadComplete()
