@@ -17,7 +17,7 @@ export default function ConsolePage() {
         setConsoleMessages(messages)
     }
 
-    return <div className="Console">
+    return <div className="ConsolePage">
         <PageHeader title="Python Test Console" />
         <PyFileUploader
             pageApi={consoleApi}
