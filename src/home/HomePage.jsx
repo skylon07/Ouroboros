@@ -5,7 +5,7 @@ import './HomePage.css'
 export default function HomePage() {
     return <div className="HomePage">
         <h1>Welcome to Project Ouroboros</h1>
-        <p>
+        <div className="HomePage-Intro">
             Project Ouroboros is a <code>react</code> website running
             a <code>Python</code> backend.
             It contains several <em>applications</em> that allow you to
@@ -35,7 +35,7 @@ export default function HomePage() {
             <br />
             And with that, you're free to visit and implement whatever
             applications you want. Good luck!
-        </p>
+        </div>
         <br />
         <h2>Applications</h2>
         <ul>
