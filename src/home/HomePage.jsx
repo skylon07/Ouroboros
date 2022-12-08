@@ -39,7 +39,14 @@ export default function HomePage() {
         <br />
         <h2>Applications</h2>
         <ul>
-            <li><Link to="/console">Echo Console</Link></li>
+           <li>
+                <Dot />
+                <Link to="/console">Echo Console</Link>
+            </li>
         </ul>
     </div>
+}
+
+function Dot() {
+    return <h2 className="HomePage-Dot">•</h2>
 }

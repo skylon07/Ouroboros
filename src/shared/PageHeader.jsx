@@ -27,7 +27,9 @@ export default function PageHeader({docRef}) {
 
     return <div className="PageHeader">
         <div className="PageHeader-TopBar">
-            <Link to="/">Back to Home</Link>
+            <div className="PageHeader-HomeLink">
+                <Link to="/">Back to Home</Link>
+            </div>
             <div className="PageHeader-Spacer" />
             <button onClick={showDoc}>Show Driver Docs</button>
         </div>

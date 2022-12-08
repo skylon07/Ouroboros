@@ -5,6 +5,5 @@ import './Link.css'
 export default function Link({to, children}) {
     return <div className="Link">
         <RLink to={to}>{children}</RLink>
-        <div className="Link-Nonhover">{children}</div>
     </div>
 }

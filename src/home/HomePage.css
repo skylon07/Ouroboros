@@ -1,3 +1,27 @@
 .HomePage-Intro {
     max-width: 700px;
+    line-height: 150%;
+}
+
+.HomePage li {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    list-style-type: none;
+}
+
+.HomePage li .Link > * {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.HomePage li img {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+}
+
+.HomePage-Dot {
+    margin-right: 10px;
 }

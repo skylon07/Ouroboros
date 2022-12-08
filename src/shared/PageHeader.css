@@ -7,6 +7,10 @@
     width: 50px;
 }
 
+.PageHeader-HomeLink {
+    width: 120px;
+}
+
 .PageHeader-DocViewer {
     position: absolute;
     z-index: 999;

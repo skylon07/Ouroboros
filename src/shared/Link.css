@@ -6,22 +6,12 @@
     color: rgb(var(--color-ink-blue));
 }
 
-.Link-Nonhover {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    text-decoration: underline;
-}
-.Link:hover .Link-Nonhover {
-    visibility: hidden;
-}
-
 .Link a {
-    font-weight: bolder;
-    visibility: hidden;
+    letter-spacing: 0.035em;
 }
 .Link:hover a {
-    visibility: visible;
+    font-weight: bolder;
+    letter-spacing: 0em;
 }
 .Link:active a {
     background-color: rgba(var(--color-shadow-black), 0.4);
