@@ -44,6 +44,13 @@ export default function HomePage() {
                 <Link to="/console">Echo Console</Link>
             </li>
         </ul>
+        {/* TODO: remove after grading */}
+        <h2>Having trouble?</h2>
+        <p>
+            A note to the TAs: If this site isn't working, please make sure
+            to consult my submission comment on Canvas if you haven't already.
+            :)
+        </p>
     </div>
 }
 
