@@ -28,6 +28,7 @@ export default function LGamePage() {
         <Game
             key={resetCount}
             onResetGame={resetGame}
+            api={lGameApi}
         />
     </div>
 }

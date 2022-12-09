@@ -5,5 +5,47 @@ export default class LGameApi extends PageApi {
         super('/l-game')
     }
 
-    // TODO
+    async fetchPlayerTurn() {
+        // TODO
+    }
+
+    async fetchMoveMode() {
+        // TODO
+    }
+
+    async advanceTurnCycle() {
+        // TODO
+    }
+
+    async fetchPlayerPieces() {
+        // TODO
+    }
+
+    async setActivePlayerPosition(newPosition) {
+        // TODO
+    }
+
+    async fetchTokenPieces() {
+        // TODO
+    }
+
+    async setTokenPiecePosition(tokenNum, newPosition) {
+        // TODO
+    }
+
+    async fetchGameOver() {
+        // TODO
+    }
+
+    async recalculateGameOver() {
+        // TODO
+    }
+
+    async notifyOutOfTime() {
+        // TODO
+    }
+
+    async fetchWinningPlayer() {
+        // TODO
+    }
 }

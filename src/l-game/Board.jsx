@@ -9,9 +9,9 @@ import { MouseControlledSection, useTokenMouseController, usePlayerMouseControll
 import PlayerPiece from './PlayerPiece'
 import TokenPiece from './TokenPiece'
 import Foreground from './Foreground'
+import Transformer from './Transformer'
 
 import './Board.css'
-import Transformer from './Transformer'
 
 /**
  * @param {{

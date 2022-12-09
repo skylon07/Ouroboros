@@ -1,29 +1,36 @@
 // originally copied from https://github.com/skylon07/CS-260-partner/l-game-react
 // (originally App.jsx)
 
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 
 import { PlayerMoveMode, Position, PlayerPosition } from './gamestate'
 
 import Board from './Board'
 import Timer from './Timer'
 import { useConstant } from './hooks'
+import { usePageApi, usePlainPageApiCallback } from 'shared/hooks'
 
 import './Game.css'
 
-export default function Game({onResetGame}) {
-    const [playerMoveMode, cyclePlayerMoveMode] = usePlayerMoveMode(
-        new PlayerMoveMode(PlayerMoveMode.PLAYER_BLUE, PlayerMoveMode.MODE_MOVE_PLAYER)
-    )
+export default function Game({onResetGame, api}) {
+    const [playerMoveMode, cyclePlayerMoveMode] = usePlayerMoveMode(api)
+    // // ORIGINAL
+    // const [playerMoveMode, cyclePlayerMoveMode] = usePlayerMoveMode(
+    //     new PlayerMoveMode(PlayerMoveMode.PLAYER_BLUE, PlayerMoveMode.MODE_MOVE_PLAYER)
+    // )
 
-    const initPlayerPiecePositions = {
-        bluePlayerPiecePosition: new PlayerPosition(1, 1, Position.DIR_DOWN, Position.DIR_REL_LEFT),
-        redPlayerPiecePosition: new PlayerPosition(2, 2, Position.DIR_UP, Position.DIR_REL_LEFT)
-    }
-    const [playerPiecePositions, setActivePlayerPiecePosition] = usePlayerPiecePositions(initPlayerPiecePositions, playerMoveMode)
+    const [playerPiecePositions, setActivePlayerPiecePosition] = usePlayerPiecePositions(api, playerMoveMode)
+    // // ORIGINAL
+    // const initPlayerPiecePositions = {
+    //     bluePlayerPiecePosition: new PlayerPosition(1, 1, Position.DIR_DOWN, Position.DIR_REL_LEFT),
+    //     redPlayerPiecePosition: new PlayerPosition(2, 2, Position.DIR_UP, Position.DIR_REL_LEFT)
+    // }
+    // const [playerPiecePositions, setActivePlayerPiecePosition] = usePlayerPiecePositions(initPlayerPiecePositions, playerMoveMode)
 
-    const [tokenPiece1Position, setTokenPiece1Position] = useState(new Position(0, 0))
-    const [tokenPiece2Position, setTokenPiece2Position] = useState(new Position(3, 3))
+    const [tokenPiece1Position, tokenPiece2Position, setTokenPiece1Position, setTokenPiece2Position] = useTokenPiecePositions(api)
+    // // ORIGINAL
+    // const [tokenPiece1Position, setTokenPiece1Position] = useState(new Position(0, 0))
+    // const [tokenPiece2Position, setTokenPiece2Position] = useState(new Position(3, 3))
 
     const piecePositions = {
         ...playerPiecePositions,
@@ -31,100 +38,155 @@ export default function Game({onResetGame}) {
         tokenPiece2Position,
     }
 
-    const movePlayer = (newPosition) => {
+    const [gameOver, refreshGameOver] = useGameOverState(api)
+    // // ORIGINAL
+    // const [gameOver, setGameOver] = useState(false)
+    // if (!gameOver && checkPlayerStuck(piecePositions, playerMoveMode)) {
+    //     setGameOver(true)
+    // }
+    //
+    // const winningPlayer = playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE ? 
+    //     "Player Red" : "Player Blue"
+
+    const movePlayer = async (newPosition) => {
         if (playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER) {
-            setActivePlayerPiecePosition(newPosition)
-            setTimeout(() => {
-                // since usePlayerMoveMode() is the first hook, it will
-                // actually update first, so we force the schedule this way
-                cyclePlayerMoveMode()
-            })
+            await setActivePlayerPiecePosition(newPosition)
+            await cyclePlayerMoveMode()
+            await refreshGameOver()
         }
     }
 
-    const moveToken = (tokenNum, newPosition) => {
+    const moveToken = async (tokenNum, newPosition) => {
         if (playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN) {
             const skipped = tokenNum === null
             if (skipped) {
                 // pass -- don't need to do anything
             } else if (tokenNum === 1) {
-                setTokenPiece1Position(newPosition)
+                await setTokenPiece1Position(newPosition)
             } else if (tokenNum === 2) {
-                setTokenPiece2Position(newPosition)
+                await setTokenPiece2Position(newPosition)
             } else {
                 throw new Error("Incorrect tokenNumber; can only move token 1 or 2")
             }
-            cyclePlayerMoveMode()
+            await cyclePlayerMoveMode()
+            await refreshGameOver()
         }
     }
 
-    const [gameOver, setGameOver] = useState(false)
-    if (!gameOver && checkPlayerStuck(piecePositions, playerMoveMode)) {
-        setGameOver(true)
-    }
+    const [initTime] = usePlainPageApiCallback(() => api.fetchInitTime())
 
-    const winningPlayer = playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE ? 
-        "Player Red" : "Player Blue"
+    const [winningPlayer, setWinningPlayer] = useState(null)
+    useEffect(() => {
+        if (gameOver && winningPlayer === null) {
+            const asyncFn = async () => {
+                const winningPlayer = await api.fetchWinningPlayer()
+                setWinningPlayer(winningPlayer)
+            }
+            asyncFn()
+        }
+    }, [gameOver, winningPlayer, api])
 
     return (
         <div className="Game">
-            <Timer
-                playerTurn={playerMoveMode.player}
-                onOutOfTime={() => setGameOver(true)}
-            />
+            {initTime !== null ?
+                <Timer
+                    initTime={initTime}
+                    playerTurn={playerMoveMode.player}
+                    onOutOfTime={async () => {
+                        await api.notifyOutOfTime()
+                        await refreshGameOver()
+                    }}
+                />
+                :
+                null
+            }
             <Board
+                api={api}
                 playerMoveMode={playerMoveMode}
                 piecePositions={piecePositions}
                 onPlayerMove={movePlayer}
                 onTokenMove={moveToken}
             />
-            {renderPlayerLostAlert(gameOver, winningPlayer, onResetGame)}
+            {winningPlayer !== null ?
+                <div className="Game-GameOver">
+                    {`${winningPlayer} won!`}
+                    <button onClick={onResetGame}>Play again?</button>
+                </div>
+                :
+                null
+            }
         </div>
     )
 }
 
-function renderPlayerLostAlert(gameOver, winningPlayer, onResetGame) {
-    if (gameOver) {
-        return <div className="Game-GameOver">
-            {`${winningPlayer} won!`}
-            <button onClick={onResetGame}>Play again?</button>
-        </div>
-    } else {
-        return null
-    }
-}
+function usePlayerMoveMode(api) {
+    const [playerTurn, invalidatePlayerTurn] = usePlainPageApiCallback(() => api.fetchPlayerTurn())
+    const [moveMode, invalidateMoveMode] = usePlainPageApiCallback(() => api.fetchMoveMode())
+    const playerMoveMode = new PlayerMoveMode(playerTurn, moveMode)
+    // // ORIGINAL
+    // const [playerMoveMode, setPlayerMoveMode] = useState(initPlayerMoveMode)
 
-function usePlayerMoveMode(initPlayerMoveMode) {
-    const [playerMoveMode, setPlayerMoveMode] = useState(initPlayerMoveMode)
     const cyclePlayerMoveMode = useConstant(() => {
-        return () => {
-            setPlayerMoveMode((playerMoveMode) => {
-                const newPlayer = playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN ?
-                    PlayerMoveMode.opposite(playerMoveMode.player) : playerMoveMode.player
-                const newMoveMode = PlayerMoveMode.opposite(playerMoveMode.moveMode)
-                return new PlayerMoveMode(newPlayer, newMoveMode)
-            })
+        return async () => {
+            await api.advanceTurnCycle()
+            invalidatePlayerTurn()
+            invalidateMoveMode()
+            // // ORIGINAL
+            // setPlayerMoveMode((playerMoveMode) => {
+            //     const newPlayer = playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN ?
+            //         PlayerMoveMode.opposite(playerMoveMode.player) : playerMoveMode.player
+            //     const newMoveMode = PlayerMoveMode.opposite(playerMoveMode.moveMode)
+            //     return new PlayerMoveMode(newPlayer, newMoveMode)
+            // })
         }
     }, [])
     return [playerMoveMode, cyclePlayerMoveMode]
 }
 
-function usePlayerPiecePositions(initPlayerPiecePositions, playerMoveMode) {
-    // setting state depends on playerMoveMode.player,
-    // hence a dynamic reducer is used instead of static state setter
-    const [playerPiecePositions, setActivePlayerPiecePosition] = useReducer(
-        (playerPiecePositions, newActivePlayerPiecePosition) => {
-            let {bluePlayerPiecePosition, redPlayerPiecePosition} = playerPiecePositions
-            if (playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE) {
-                bluePlayerPiecePosition = newActivePlayerPiecePosition
-            } else {
-                redPlayerPiecePosition = newActivePlayerPiecePosition
-            }
-            return {bluePlayerPiecePosition, redPlayerPiecePosition}
-        },
-        initPlayerPiecePositions,
-    )
+function usePlayerPiecePositions(api, playerMoveMode) {
+    const [playerPiecePositions, invalidatePlayerPiecePositions] = usePlainPageApiCallback(() => api.fetchPlayerPieces())
+    const setActivePlayerPiecePosition = async (newActivePlayerPiecePosition) => {
+        await api.setActivePlayerPosition(newActivePlayerPiecePosition)
+        invalidatePlayerPiecePositions()
+    }
+    // // ORIGINAL
+    // // setting state depends on playerMoveMode.player,
+    // // hence a dynamic reducer is used instead of static state setter
+    // const [playerPiecePositions, setActivePlayerPiecePosition] = useReducer(
+    //     (playerPiecePositions, newActivePlayerPiecePosition) => {
+    //         let {bluePlayerPiecePosition, redPlayerPiecePosition} = playerPiecePositions
+    //         if (playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE) {
+    //             bluePlayerPiecePosition = newActivePlayerPiecePosition
+    //         } else {
+    //             redPlayerPiecePosition = newActivePlayerPiecePosition
+    //         }
+    //         return {bluePlayerPiecePosition, redPlayerPiecePosition}
+    //     },
+    //     initPlayerPiecePositions,
+    // )
     return [playerPiecePositions, setActivePlayerPiecePosition]
+}
+
+function useTokenPiecePositions(api) {
+    const [[tokenPiece1Position, tokenPiece2Position], invalidateTokenPiecePositions] = usePlainPageApiCallback(() => api.fetchTokenPieces())
+    const setTokenPiece1Position = async (newPosition) => {
+        await api.setTokenPiecePosition(1, newPosition)
+        invalidateTokenPiecePositions()
+    }
+    const setTokenPiece2Position = async (newPosition) => {
+        await api.setTokenPiecePosition(2, newPosition)
+        invalidateTokenPiecePositions()
+    }
+    return [tokenPiece1Position, tokenPiece2Position, setTokenPiece1Position, setTokenPiece2Position]
+}
+
+function useGameOverState(api) {
+    const [gameOver, invalidateGameOver] = usePlainPageApiCallback(() => api.fetchGameOver())
+    const refreshGameOver = async () => {
+        await api.recalculateGameOver()
+        invalidateGameOver()
+    }
+    return [gameOver, refreshGameOver]
 }
 
 /**
