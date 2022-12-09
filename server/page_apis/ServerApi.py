@@ -15,22 +15,26 @@ class ServerApi(ABC):
         self._logs = []
 
     # overridable methods
-    def onGet(self, queryParams):
+    def onGetLogs(self, queryParams):
         pass
 
-    def onPost(self, queryParams, requestDict):
+    def onGetFile(self, queryParams):
+        pass
+
+    def onPostFile(self, queryParams, requestDict):
         pass
 
     # base implementations
     def get(self, queryParams):
-        self.onGet(queryParams)
         if 'logs' in queryParams:
+            self.onGetLogs(queryParams)
             return self._logs
         else:
+            self.onGetFile(queryParams)
             return self._lastFileRequest
 
     def post(self, queryParams, requestDict):
-        self.onPost(queryParams, requestDict)
+        self.onPostFile(queryParams, requestDict)
         self.__execPyFile(requestDict['pyfile'])
         self._lastFileRequest = requestDict
 

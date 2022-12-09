@@ -7,7 +7,7 @@ class ConsoleApi(ServerApi):
         super().__init__("/console", driver)
         self._msgs = []
 
-    def onPost(self, queryParams, requestDict):
+    def onPostFile(self, queryParams, requestDict):
         self._msgs = []
 
     def getAction(self, action, queryParams):
