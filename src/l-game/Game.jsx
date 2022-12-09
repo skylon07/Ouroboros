@@ -38,7 +38,7 @@ export default function Game({onResetGame, api}) {
         tokenPiece2Position,
     }
 
-    const [gameOver, refreshGameOver] = useGameOverState(api)
+    const [gameOver, invalidateGameOver] = useGameOverState(api)
     // // ORIGINAL
     // const [gameOver, setGameOver] = useState(false)
     // if (!gameOver && checkPlayerStuck(piecePositions, playerMoveMode)) {
@@ -52,7 +52,7 @@ export default function Game({onResetGame, api}) {
         if (playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER) {
             await setActivePlayerPiecePosition(newPosition)
             await cyclePlayerMoveMode()
-            await refreshGameOver()
+            invalidateGameOver()
         }
     }
 
@@ -69,7 +69,7 @@ export default function Game({onResetGame, api}) {
                 throw new Error("Incorrect tokenNumber; can only move token 1 or 2")
             }
             await cyclePlayerMoveMode()
-            await refreshGameOver()
+            invalidateGameOver()
         }
     }
 
@@ -94,7 +94,7 @@ export default function Game({onResetGame, api}) {
                     playerTurn={playerMoveMode.player}
                     onOutOfTime={async () => {
                         await api.notifyOutOfTime()
-                        await refreshGameOver()
+                        invalidateGameOver()
                     }}
                 />
                 :
@@ -183,11 +183,7 @@ function useTokenPiecePositions(api) {
 
 function useGameOverState(api) {
     const [gameOver, invalidateGameOver] = usePlainPageApiCallback(() => api.fetchGameOver())
-    const refreshGameOver = async () => {
-        await api.recalculateGameOver()
-        invalidateGameOver()
-    }
-    return [gameOver, refreshGameOver]
+    return [gameOver, invalidateGameOver]
 }
 
 /**
