@@ -1,5 +1,7 @@
 import Link from 'shared/Link'
 
+import icon_lgame from './l-game.png'
+
 import './HomePage.css'
 
 export default function HomePage() {
@@ -42,6 +44,11 @@ export default function HomePage() {
            <li>
                 <Dot />
                 <Link to="/console">Echo Console</Link>
+            </li>
+            <li>
+                <Dot />
+                <Link to="/l-game">L-Game</Link>
+                <Link to="/l-game"><img src={icon_lgame} alt="l-game-icon" /></Link>
             </li>
         </ul>
         {/* TODO: remove after grading */}

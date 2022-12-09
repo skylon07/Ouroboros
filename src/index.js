@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import HomePage from 'home/HomePage'
 import ConsolePage from 'console/ConsolePage'
+import LGamePage from 'l-game/LGamePage'
 
 import './index.css'
 
@@ -21,6 +22,10 @@ root.render(
                 <Route
                     path='/console'
                     element={<ConsolePage />}
+                />
+                <Route
+                    path='/l-game'
+                    element={<LGamePage />}
                 />
             </Routes>
         </BrowserRouter>
