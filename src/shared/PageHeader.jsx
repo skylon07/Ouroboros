@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Link from 'shared/Link'
+import PageButton from 'shared/PageButton'
 
 import './PageHeader.css'
 
@@ -31,10 +32,10 @@ export default function PageHeader({docRef}) {
                 <Link to="/">Back to Home</Link>
             </div>
             <div className="PageHeader-Spacer" />
-            <button onClick={showDoc}>Show Driver Docs</button>
+            <PageButton onClick={showDoc}>Show Driver Docs</PageButton>
         </div>
         <div className={`PageHeader-DocViewer ${docVisibleClass}`}>
-            <button onClick={hideDoc}>✕</button>
+            <PageButton onClick={hideDoc}>✕</PageButton>
             <pre>{docText}</pre>
         </div>
     </div>
