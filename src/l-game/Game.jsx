@@ -168,7 +168,8 @@ function usePlayerPiecePositions(api, playerMoveMode) {
 }
 
 function useTokenPiecePositions(api) {
-    const [[tokenPiece1Position, tokenPiece2Position], invalidateTokenPiecePositions] = usePlainPageApiCallback(() => api.fetchTokenPieces())
+    const [tokenPositions, invalidateTokenPiecePositions] = usePlainPageApiCallback(() => api.fetchTokenPieces())
+    const {tokenPiece1Position, tokenPiece2Position} = tokenPositions
     const setTokenPiece1Position = async (newPosition) => {
         await api.setTokenPiecePosition(1, newPosition)
         invalidateTokenPiecePositions()
