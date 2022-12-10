@@ -1,3 +1,13 @@
+:root {
+    --Game-main-dimension: min(90vw, 80vh);
+}
+
+.Game {
+    position: relative;
+    width: var(--Game-main-dimension);
+    height: var(--Game-main-dimension);
+}
+
 .Game-GameOver {
     position: absolute;
     top: 0px;
@@ -7,23 +17,23 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    width: var(--Game-main-dimension);
+    height: var(--Game-main-dimension);
     background-color: var(--color-deep-black-trans);
     color: var(--color-soft-white);
-    font-size: 10vw;
+    font-size: calc(0.1 * var(--Game-main-dimension));
 }
 
 .Game-GameOver button {
-    margin-top: 10vw;
-    padding: 2vw;
-    border: 1vw solid;
+    margin-top: calc(0.1 * var(--Game-main-dimension));
+    padding: calc(0.02 * var(--Game-main-dimension));
+    border: calc(0.01 * var(--Game-main-dimension)) solid;
     border-color: var(--color-space-gray);
-    border-radius: 5vw;
+    border-radius: calc(0.05 * var(--Game-main-dimension));
     box-sizing: border-box;
     background-color: var(--color-space-gray);
     color: var(--color-soft-white);
-    font-size: 7vw;
+    font-size: calc(0.07 * var(--Game-main-dimension));
 }
 
 .Game-GameOver button:hover {

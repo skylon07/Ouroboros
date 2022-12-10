@@ -1,6 +1,6 @@
 :root {
-    --BoardSquare-border-size: 1vw;
-    --Board-extra-padding: 1vw;
+    --BoardSquare-border-size: calc(0.01 * var(--Game-main-dimension));
+    --Board-extra-padding: calc(0.01 * var(--Game-main-dimension));
 
     --BoardSquare-overlap-compensation: calc(-0.5 * var(--BoardSquare-border-size));
     --Board-neg-margin-compensation: var(--BoardSquare-border-size);
@@ -28,8 +28,8 @@
 
 .BoardSquare {
     margin: var(--BoardSquare-overlap-compensation);
-    width: 25vw;
-    height: 25vw;
+    width: calc(0.25 * var(--Game-main-dimension));
+    height: calc(0.25 * var(--Game-main-dimension));
     box-sizing: border-box;
     border: var(--BoardSquare-border-size) solid;
 }
@@ -53,19 +53,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4vw;
-    width: calc(100vw - 2*var(--Board-total-padding));
+    padding: calc(0.04 * var(--Game-main-dimension));
+    width: calc(var(--Game-main-dimension) - 2*var(--Board-total-padding));
     box-sizing: border-box;
 }
 
 .Board-Skip {
     position: relative;
     opacity: 50%;
-    width: 20vw;
-    padding: 1.5vw;
+    width: calc(0.20 * var(--Game-main-dimension));
+    padding: calc(0.015 * var(--Game-main-dimension));
     border: none;
-    border-radius: 2vw;
-    font-size: 4vw;
+    border-radius: calc(0.02 * var(--Game-main-dimension));
+    font-size: calc(0.04 * var(--Game-main-dimension));
 }
 .Board-Skip.hidden {
     visibility: hidden;
@@ -92,7 +92,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border: 0.5vw solid;
-    border-radius: 2vw;
+    border: calc(0.005 * var(--Game-main-dimension)) solid;
+    border-radius: calc(0.02 * var(--Game-main-dimension));
     opacity: 60%;
 }

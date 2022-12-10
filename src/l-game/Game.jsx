@@ -4,7 +4,6 @@
 import { PlayerMoveMode } from './gamestate'
 
 import Board from './Board'
-import Timer from './Timer'
 
 import './Game.css'
 
@@ -49,9 +48,6 @@ export default function Game({state, callApi}) {
     }
 
     return <div className="Game">
-        <Timer
-            playerTurn={playerMoveMode.player}
-        />
         <Board
             playerMoveMode={playerMoveMode}
             piecePositions={piecePositions}

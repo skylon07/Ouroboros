@@ -30,20 +30,20 @@
 }
 
 .TokenPiece.pickedUp .TokenPiece-Circle {
-    border: 1vw solid var(--color-deep-black);
+    border: calc(0.01 * var(--Game-main-dimension)) solid var(--color-deep-black);
     position: relative;
-    top: -2vw;
-    left: -2vw;
+    top: -calc(0.02 * var(--Game-main-dimension));
+    left: -calc(0.02 * var(--Game-main-dimension));
 }
 
 .TokenPiece.pickedUp .TokenPiece-Circle::after {
     content: "";
     z-index: -1;
     position: absolute;
-    top: 2.5vw;
-    left: 2.5vw;
-    width: calc(100% + 1.5vw);
-    height: calc(100% + 1.5vw);
+    top: calc(0.025 * var(--Game-main-dimension));
+    left: calc(0.025 * var(--Game-main-dimension));
+    width: calc(100% + calc(0.015 * var(--Game-main-dimension)));
+    height: calc(100% + calc(0.015 * var(--Game-main-dimension)));
     box-sizing: content-box;
     border-radius: inherit;
     background-color: var(--color-deep-black);

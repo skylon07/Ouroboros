@@ -1,5 +1,5 @@
 :root {
-    --PlayerPiece-size: calc(100vw - 2*var(--Board-total-padding));
+    --PlayerPiece-size: calc(var(--Game-main-dimension) - 2*var(--Board-total-padding));
     --PlayerPiece-indent: var(--Board-total-padding);
     --PlayerPiece-Square-size: 25%;
 }
@@ -30,7 +30,7 @@
 .PlayerPiece.faded .PlayerPiece-Square {
     background-color: transparent;
     opacity: 75%;
-    border: 2vw solid;
+    border: calc(0.02 * var(--Game-main-dimension)) solid;
 }
 .PlayerPiece.player-blue.faded .PlayerPiece-Square {
     border-color: var(--color-blue-player);
