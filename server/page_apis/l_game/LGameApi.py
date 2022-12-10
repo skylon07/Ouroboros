@@ -265,7 +265,7 @@ class LGameApi(ServerApi):
             if self._useDefaultImplementation:
                 self._defaultSetActivePlayerPosition(positionPath)
             else:
-                self._setActivePlayer(positionPath)
+                self._setActivePlayerPosition(positionPath)
         elif action == '/token-position':
             id = requestDict['id']
             position = requestDict['position']
