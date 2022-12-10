@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 import AppApi from './AppApi'
 
@@ -40,19 +40,32 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
             asyncFn()
         }
     }, [invalidated, appStateConstructor, appApi])
-    const invalidateAppState = () => setInvalidated(true)
+    const invalidateAppState = useCallback(() => setInvalidated(true), [])
 
-    const callAppApi = async (asyncCallerFn) => {
-        await asyncCallerFn(appApi)
+    const callAppApi = useCallback(async (asyncCallerFn) => {
+        if (typeof asyncCallerFn === "function") {
+            await asyncCallerFn(appApi)
+        }
         invalidateAppState()
-    }
+    }, [appApi, invalidateAppState])
 
     return [appStateRef.current, callAppApi]
 }
 
-export function useAppResetter(componentFactory) {
-    const [component, setComponent] = useState(componentFactory)
-    const unmountComponent = () => setComponent(null)
-    const mountComponent = () => setComponent(componentFactory())
-    return [component, unmountComponent, mountComponent]
+export function useAppComponent(appState, componentFactory) {
+    const [component, setComponent] = useState(null)
+    const mountComponent = useCallback(() => setComponent(componentFactory()), [componentFactory])
+
+    useEffect(() => {
+        if (component === null && appState !== null) {
+            mountComponent()
+        }
+    }, [appState, component, mountComponent])
+
+    const resetComponent = useCallback(() => setComponent(null), [])
+
+    return [
+        appState !== null ? component : null,
+        resetComponent
+    ]
 }
