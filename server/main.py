@@ -111,7 +111,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
                 )
             }
         else:
-            queryParams = None
+            queryParams = dict()
         return (apiPath, actionPath, queryParams)
 
     def raise_bad_query_string(self, queryKey, queryVal):
