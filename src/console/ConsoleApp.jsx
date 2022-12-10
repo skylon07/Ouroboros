@@ -1,7 +1,7 @@
 import AppHeader from 'shared/AppHeader'
 import AppTitle from 'shared/AppTitle'
 import PyFileUploader from 'shared/PyFileUploader'
-import { useAppApi, useAppResetter, useAppState } from 'shared/hooks'
+import { useAppApi, useAppComponent, useAppState } from 'shared/hooks'
 
 import ConsoleApi from './ConsoleApi'
 import driverDocs from './driverdocs.txt'
@@ -18,7 +18,7 @@ export default function ConsoleApp() {
         }
     })
 
-    const [consoleApp, unmountConsole, mountConsole] = useAppResetter(() => {
+    let [consoleApp, resetConsoleApp] = useAppComponent(consoleState, () => {
         return <Console state={consoleState} callApi={callConsoleApi} />
     })
 
@@ -26,8 +26,8 @@ export default function ConsoleApp() {
         <AppHeader docRef={driverDocs} />
         <PyFileUploader
             appApi={consoleApi}
-            onUploadStart={unmountConsole}
-            onUploadComplete={mountConsole}
+            onUploadStart={resetConsoleApp}
+            onUploadComplete={callConsoleApi}
         />
         <AppTitle title="Echo Console" />
         <br />
@@ -37,6 +37,6 @@ export default function ConsoleApp() {
 
 function Console({state, callApi}) {
     return <div className="Console">
-        <textarea value={state?.messages} readOnly />
+        <textarea value={state.messages} readOnly />
     </div>
 }
