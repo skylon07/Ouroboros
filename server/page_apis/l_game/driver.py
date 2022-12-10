@@ -80,28 +80,49 @@ def setWinningPlayer(playerName):
     _api._gameState['winningPlayer'] = playerName
 
 def onSetActivePlayerPosition(setActivePlayerPositionFn):
-    if type(setActivePlayerPositionFn) is not type(onSetActivePlayerPosition):
+    class Class:
+        def method(self):
+            pass
+    
+    if type(setActivePlayerPositionFn) is type(onSetActivePlayerPosition):
+        if setActivePlayerPositionFn.__code__.co_argcount != 1:
+            raise ValueError("onSetActivePlayerPosition(setActivePlayerPositionFn) -- setActivePlayerPositionFn should take one argument")
+    elif type(setActivePlayerPositionFn) is type(Class().method):
+        if setActivePlayerPositionFn.__code__.co_argcount != 2:
+            raise ValueError("onSetActivePlayerPosition(setActivePlayerPositionFn) -- setActivePlayerPositionFn should take one argument")
+    else:
         raise ValueError("onSetActivePlayerPosition(setActivePlayerPositionFn) -- setActivePlayerPositionFn was not a function")
-
-    if setActivePlayerPositionFn.__code__.co_argcount != 1:
-        raise ValueError("onSetActivePlayerPosition(setActivePlayerPositionFn) -- setActivePlayerPositionFn should take one argument")
     
     _api._setActivePlayerPosition = setActivePlayerPositionFn
 
 def onSetTokenPiecePosition(setTokenPiecePositionFn):
-    if type(setTokenPiecePositionFn) is not type(onSetTokenPiecePosition):
+    class Class:
+        def method(self):
+            pass
+    
+    if type(setTokenPiecePositionFn) is type(onSetTokenPiecePosition):
+        if setTokenPiecePositionFn.__code__.co_argcount != 2:
+            raise ValueError("onSetTokenPiecePosition(setTokenPiecePositionFn) -- setTokenPiecePositionFn should take two arguments")
+    elif type(setTokenPiecePositionFn) is type(Class().method):
+        if setTokenPiecePositionFn.__code__.co_argcount != 3:
+            raise ValueError("onSetTokenPiecePosition(setTokenPiecePositionFn) -- setTokenPiecePositionFn should take two arguments")
+    else:
         raise ValueError("onSetTokenPiecePosition(setTokenPiecePositionFn) -- setTokenPiecePositionFn was not a function")
-
-    if setTokenPiecePositionFn.__code__.co_argcount != 0:
-        raise ValueError("onSetTokenPiecePosition(setTokenPiecePositionFn) -- setTokenPiecePositionFn should take two arguments")
     
     _api._setTokenPiecePosition = setTokenPiecePositionFn
 
 def onResetGame(resetGameFn):
-    if type(resetGameFn) is not type(onResetGame):
+    class Class:
+        def method(self):
+            pass
+    
+    if type(resetGameFn) is type(onResetGame):
+        if resetGameFn.__code__.co_argcount != 0:
+            raise ValueError("onResetGame(resetGameFn) -- resetGameFn should take no arguments")
+    elif type(resetGameFn) is type(Class().method):
+        if resetGameFn.__code__.co_argcount != 1:
+            raise ValueError("onResetGame(resetGameFn) -- resetGameFn should take no arguments")
+    else:
         raise ValueError("onResetGame(resetGameFn) -- resetGameFn was not a function")
-
-    if resetGameFn.__code__.co_argcount != 1:
-        raise ValueError("onResetGame(resetGameFn) -- resetGameFn should take no arguments")
     
     _api._resetGame = resetGameFn
