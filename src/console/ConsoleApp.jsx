@@ -1,9 +1,7 @@
-import { useState } from 'react'
-
 import AppHeader from 'shared/AppHeader'
 import AppTitle from 'shared/AppTitle'
 import PyFileUploader from 'shared/PyFileUploader'
-import { useAppApi } from 'shared/hooks'
+import { useAppApi, useAppResetter, useAppState } from 'shared/hooks'
 
 import ConsoleApi from './ConsoleApi'
 import driverDocs from './driverdocs.txt'
@@ -12,24 +10,33 @@ import './ConsoleApp.css'
 
 export default function ConsoleApp() {
     const consoleApi = useAppApi(ConsoleApi)
-    
-    const [consoleMessages, setConsoleMessages] = useState("")
 
-    const resetConsole = () => setConsoleMessages("")
-    const getConsoleMessages = async () => {
-        const messages = await consoleApi.fetchMessages()
-        setConsoleMessages(messages)
-    }
+    const [consoleState, callConsoleApi] = useAppState(consoleApi, async (api) => {
+        const futureMessages = api.fetchMessages()
+        return {
+            messages: await futureMessages,
+        }
+    })
+
+    const [consoleApp, unmountConsole, mountConsole] = useAppResetter(() => {
+        return <Console state={consoleState} callApi={callConsoleApi} />
+    })
 
     return <div className="ConsoleApp">
         <AppHeader docRef={driverDocs} />
         <PyFileUploader
             appApi={consoleApi}
-            onUploadStart={resetConsole}
-            onUploadComplete={getConsoleMessages}
+            onUploadStart={unmountConsole}
+            onUploadComplete={mountConsole}
         />
         <AppTitle title="Echo Console" />
         <br />
-        <textarea value={consoleMessages} readOnly />
+        {consoleApp}
+    </div>
+}
+
+function Console({state, callApi}) {
+    return <div className="Console">
+        <textarea value={state?.messages} readOnly />
     </div>
 }
