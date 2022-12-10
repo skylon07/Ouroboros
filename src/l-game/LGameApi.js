@@ -61,8 +61,8 @@ export default class LGameApi extends AppApi {
         await this._callPostAction('/token-position', {
             id: tokenNum,
             position: {
-                row: newPosition.rowIdx,
-                col: newPosition.colIdx,
+                row: newPosition?.rowIdx,
+                col: newPosition?.colIdx,
             },
         })
     }
