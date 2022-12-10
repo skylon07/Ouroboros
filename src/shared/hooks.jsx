@@ -46,3 +46,10 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
 
     return [appStateRef.current, callAppApi]
 }
+
+export function useAppResetter(componentFactory) {
+    const [component, setComponent] = useState(componentFactory)
+    const unmountComponent = () => setComponent(null)
+    const mountComponent = () => componentFactory()
+    return [component, unmountComponent, mountComponent]
+}
