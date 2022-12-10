@@ -358,11 +358,7 @@ class LGameApi(ServerApi):
             for currColIdx in range(4):
                 position = Position(currRowIdx, currColIdx)
                 if self._defaultHelper_checkOpenLPath([position], bluePlayerPosition, redPlayerPosition, tokenPiece1Position, tokenPiece2Position):
-                    # DEBUG
-                    print("\tNO PATH")
                     return False
-        # DEBUG
-        print("\tYES PATH")
         return True
 
     def _defaultHelper_checkOpenLPath(self, positionStack, bluePlayerPosition, redPlayerPosition, tokenPiece1Position, tokenPiece2Position):
@@ -376,24 +372,16 @@ class LGameApi(ServerApi):
         inBounds = rowIdxInBounds and colIdxInBounds
         if inBounds:
             if position == tokenPiece1Position:
-                # DEBUG
-                print("\tposition == tokenPiece1Position")
                 return False
             if position == tokenPiece2Position:
-                # DEBUG
-                print("\tposition == tokenPiece2Position")
                 return False
             if currPlayerTurn is not driver.PLAYER_BLUE:
                 for playerPosition in bluePositionPath:
                     if position == Position(playerPosition['row'], playerPosition['col']):
-                        # DEBUG
-                        print("\tposition == Position (blue)")
                         return False
             if currPlayerTurn is not driver.PLAYER_RED:
                 for playerPosition in redPositionPath:
                     if position == Position(playerPosition['row'], playerPosition['col']):
-                        # DEBUG
-                        print("\tposition == Position (red)")
                         return False
 
             forwardPaths = 0
@@ -416,11 +404,7 @@ class LGameApi(ServerApi):
                     if currPlayerTurn == driver.PLAYER_BLUE \
                     else redPlayerPosition
                 pathsAreJustPlayerPosition = stackAsPlayerPosition == playerPosition
-                # DEBUG
-                print(f"\t{stackAsPlayerPosition}")
                 if not pathsAreJustPlayerPosition:
-                    # DEBUG
-                    print("\tnot pathsAreJustPlayerPosition")
                     return True
 
             applyDirs = (
@@ -439,15 +423,9 @@ class LGameApi(ServerApi):
                     newPositionStack = positionStack + [newPosition]
                     foundPath = self._defaultHelper_checkOpenLPath(newPositionStack, bluePlayerPosition, redPlayerPosition, tokenPiece1Position, tokenPiece2Position)
                     if foundPath:
-                        # DEBUG
-                        print("\tfoundPath")
                         return True
-            # DEBUG
-            print("\t(no positions found)")
             return False
         else:
-            # DEBUG
-            print("\t(out of bounds)")
             return False
 
     # overridden implementations
