@@ -1,5 +1,10 @@
 import './AppButton.css'
 
-export default function AppButton({children}) {
-    return <button className="AppButton">{children}</button>
+export default function AppButton({onClick, children}) {
+    return <button
+        className="AppButton"
+        onClick={onClick}
+    >
+        {children}
+    </button>
 }
