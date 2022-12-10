@@ -39,13 +39,14 @@ class ServerApi(ABC):
         self.__execPyFile(requestDict['pyfile'])
         self._lastRequestDate = str(datetime.utcnow())
 
-    def __execPyFile(self, fileData):
+    def _execInContext(self, execFn):
         oldPath = sys.path
         sys.path = [f"./{self._apiPath}"]
         importlib.reload(self._driver)
         self._driver._syncApi(self)
 
         globalVars = dict(self._getGlobals())
+
         globalsToDelete = (
             type(self).__name__,
             'ServerApi',
@@ -54,13 +55,16 @@ class ServerApi(ABC):
         for globalName in globalsToDelete:
             if globalName in globalVars:
                 del globalVars[globalName]
-        localVars = {
-            'input': None,
-            'print': lambda msg: self.__appendLog("log", str(msg)),
-        }
+        
+        globalVars['print'] = lambda msg: self.__appendLog("log", str(msg))
+        globalVars['input'] = None
+        globalVars['driver'] = self._driver
+        
         try:
-            self.__checkFileDataBuiltins(fileData)
-            self._exec_noVarsInContext(fileData, globalVars, localVars)
+            if execFn.__code__.co_argcount == 1:
+                execFn(globalVars)
+            else:
+                execFn()
         except Exception as error:
             rawTracebackStr = traceback.format_exc()
             firstFileIdx = rawTracebackStr.index("File")
@@ -69,6 +73,12 @@ class ServerApi(ABC):
             self.__appendLog("error", f"{type(error).__name__}: {str(error)}\n{tracebackStr}")
         
         sys.path = oldPath
+
+    def __execPyFile(self, fileData):
+        def execPyFile(globalVars):
+            self.__checkFileDataBuiltins(fileData)
+            self._exec_noVarsInContext(fileData, globalVars, None)
+        self._execInContext(execPyFile)
 
     @abstractmethod
     def _exec_noVarsInContext(self, fileData, globalVars, localVars):
