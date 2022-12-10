@@ -16,7 +16,11 @@ export function useAppState(AppApiClass, appStateConstructor) {
     const [appState, setAppState] = useState(null)
     useEffect(() => {
         if (appState === null) {
-            setAppState(appStateConstructor(api))
+            const asyncFn = async () => {
+                const newAppState = await appStateConstructor(api)
+                setAppState(newAppState)
+            }
+            asyncFn()
         }
     }, [appState, appStateConstructor, api])
     const invalidateAppState = () => setAppState(null)
