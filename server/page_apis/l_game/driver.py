@@ -36,9 +36,9 @@ def setGameOver(gameOver):
     # TODO: validation
     _api._gameState['gameOver'] = gameOver
 
-def setWinningPlayer(player):
+def setWinningPlayer(playerName):
     # TODO: validation
-    _api._gameState['winningPlayer'] = player
+    _api._gameState['winningPlayer'] = playerName
 
 def onSetActivePlayerPosition(setActivePlayerPositionFn):
     _api._setActivePlayerPosition = setActivePlayerPositionFn
