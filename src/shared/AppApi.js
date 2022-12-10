@@ -74,7 +74,7 @@ export default class AppApi {
         return response.data
     }
 
-    async _callPostAction(actionUrl, requestData) {
+    async _callPostAction(actionUrl, requestData = {}) {
         if (typeof actionUrl !== "string" || actionUrl[0] !== "/") {
             throw new Error("An AppApi attempted to call an action (post) with an invalid action url")
         }
