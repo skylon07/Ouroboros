@@ -29,7 +29,7 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
             appStateRef.current = initStateConstructor
         }
     }
-    const [invalidated, setInvalidated] = useState(false)
+    const [invalidated, setInvalidated] = useState(true)
     useEffect(() => {
         if (invalidated) {
             const asyncFn = async () => {
