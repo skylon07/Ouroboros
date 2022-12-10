@@ -21,18 +21,26 @@ export default class LGameApi extends AppApi {
         } = response
         return {
             playerMoveMode: new PlayerMoveMode(playerTurn, moveMode),
-            bluePlayerPiecePosition: PlayerPosition.fromPositionPath(
-                bluePositionPath.map((positionRep) => 
-                    new Position(positionRep.row, positionRep.col)
+            bluePlayerPiecePosition: bluePositionPath !== null ? 
+                PlayerPosition.fromPositionPath(
+                    bluePositionPath.map((positionRep) => 
+                        new Position(positionRep.row, positionRep.col)
+                    )
                 )
-            ),
-            redPlayerPiecePosition: PlayerPosition.fromPositionPath(
-                redPositionPath.map((positionRep) => 
-                    new Position(positionRep.row, positionRep.col)
+                :
+                null,
+            redPlayerPiecePosition: redPositionPath !== null ? 
+                PlayerPosition.fromPositionPath(
+                    redPositionPath.map((positionRep) => 
+                        new Position(positionRep.row, positionRep.col)
+                    )
                 )
-            ),
-            tokenPiece1Position: new Position(token1Position.row, token1Position.col),
-            tokenPiece2Position: new Position(token2Position.row, token2Position.col),
+                :
+                null,
+            tokenPiece1Position: token1Position !== null ?
+                new Position(token1Position.row, token1Position.col) : null,
+            tokenPiece2Position: token2Position !== null ?
+                new Position(token2Position.row, token2Position.col) : null,
             gameOver,
             winningPlayer,
         }

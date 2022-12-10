@@ -20,7 +20,7 @@ export default function Game({state, callApi}) {
     } = state
 
     const movePlayer = async (newPlayerPosition) => {
-        if (playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER) {
+        if (playerMoveMode?.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER) {
             await callApi(async (api) => {
                 await api.setActivePlayerPosition(newPlayerPosition)
             })
@@ -28,7 +28,7 @@ export default function Game({state, callApi}) {
     }
 
     const moveToken = async (tokenNum, newPosition) => {
-        if (playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN) {
+        if (playerMoveMode?.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN) {
             await callApi(async (api) => {
                 await api.setTokenPiecePosition(tokenNum, newPosition)
             })

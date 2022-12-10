@@ -67,7 +67,7 @@
     border-radius: 2vw;
     font-size: 4vw;
 }
-.Board.mode-player .Board-Skip {
+.Board-Skip.hidden {
     visibility: hidden;
 }
 

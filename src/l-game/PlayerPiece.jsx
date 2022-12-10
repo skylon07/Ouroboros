@@ -16,13 +16,13 @@ import './PlayerPiece.css'
  * @typedef {import('./gamestate').PlayerPosition} PlayerPosition
  */
 export default function PlayerPiece({position, forPlayer, faded}) {
-    if (!(position instanceof PlayerPosition)) {
+    if (!(position instanceof PlayerPosition) && position !== null) {
         throw new TypeError("PlayerPiece must be given a position: PlayerPosition prop")
     }
 
     const pieceRef = useRef()
 
-    const pieceSquares = position.toPositionPath().map((pathPosition) => {
+    const pieceSquares = position?.toPositionPath()?.map((pathPosition) => {
         const offsetYCss = `calc(${pathPosition.rowIdx} * var(--PlayerPiece-Square-size))`
         const offsetXCss = `calc(${pathPosition.colIdx} * var(--PlayerPiece-Square-size))`
 

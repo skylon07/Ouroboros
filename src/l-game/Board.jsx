@@ -54,12 +54,16 @@ export default function Board({playerMoveMode, piecePositions, onPlayerMove, onT
     const isRedPieceFaded = playerMoveMode.player === PlayerMoveMode.PLAYER_RED && 
         playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER
 
-    const playerTurnClass = playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE ?
-        "player-blue" : "player-red"
-    const moveModeClass = playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER ?
-        "mode-player" : "mode-token"
-    const boardSkipHiddenClass = playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER ?
-        "hidden" : ""
+    const playerTurnClass = 
+        playerMoveMode.player === PlayerMoveMode.PLAYER_BLUE ? "player-blue" :
+        playerMoveMode.player === PlayerMoveMode.PLAYER_RED ? "player-red" :
+        ""
+    const moveModeClass =
+        playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_PLAYER ? "mode-player" :
+        playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN ? "mode-token" :
+        ""
+    const boardSkipHiddenClass = playerMoveMode.moveMode === PlayerMoveMode.MODE_MOVE_TOKEN ?
+        "" : "hidden"
 
     return (
         <div className={`Board ${playerTurnClass} ${moveModeClass}`}>
@@ -71,12 +75,12 @@ export default function Board({playerMoveMode, piecePositions, onPlayerMove, onT
                 topLeftElemRef,
             )}
             <PlayerPiece
-                position={piecePositions.bluePlayerPiecePosition}
+                position={piecePositions?.bluePlayerPiecePosition}
                 forPlayer={PlayerMoveMode.PLAYER_BLUE}
                 faded={isBluePieceFaded}
             />
             <PlayerPiece
-                position={piecePositions.redPlayerPiecePosition}
+                position={piecePositions?.redPlayerPiecePosition}
                 forPlayer={PlayerMoveMode.PLAYER_RED}
                 faded={isRedPieceFaded}
             />
@@ -88,7 +92,7 @@ export default function Board({playerMoveMode, piecePositions, onPlayerMove, onT
             >
                 <Transformer ref={tokenPiece1TransformerRef}>
                     <TokenPiece
-                        position={piecePositions.tokenPiece1Position}
+                        position={piecePositions?.tokenPiece1Position}
                         mouseHandler={tokenMouseHandlers.getHandler(1)}
                         isPickedUp={tokensPickedUp[0]}
                     />
@@ -102,7 +106,7 @@ export default function Board({playerMoveMode, piecePositions, onPlayerMove, onT
             >
                 <Transformer ref={tokenPiece2TransformerRef}>
                     <TokenPiece
-                        position={piecePositions.tokenPiece2Position}
+                        position={piecePositions?.tokenPiece2Position}
                         mouseHandler={tokenMouseHandlers.getHandler(2)}
                         isPickedUp={tokensPickedUp[1]}
                     />

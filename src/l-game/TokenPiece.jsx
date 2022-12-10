@@ -17,12 +17,12 @@ import { MouseControlledSection } from "./selectables"
  * @typedef {import('./gamestate').Position} Position
  */
 export default function TokenPiece({position, isPickedUp, mouseHandler}) {
-    if (!(position instanceof Position)) {
+    if (!(position instanceof Position) && position !== null) {
         throw new TypeError("TokenPiece must be given a position: Position prop")
     }
 
-    const offsetYCss = `calc(${position.rowIdx} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
-    const offsetXCss = `calc(${position.colIdx} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
+    const offsetYCss = `calc(${position?.rowIdx || -999} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
+    const offsetXCss = `calc(${position?.colIdx || -999} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
 
     const style = {
         top: offsetYCss,
