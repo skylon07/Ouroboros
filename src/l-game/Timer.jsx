@@ -5,8 +5,7 @@ import { PlayerMoveMode } from './gamestate'
 import './Timer.css';
 
 export default function Timer(props) { // props.playerTurn
-    // TODO: handle props.initTime
-    // TODO: refactor (timeouts not set up correctly)
+    // TODO: refactor to use specific time
     
     const [time, setTime] = useState(300);
     const [time2, setTime2] = useState(300);

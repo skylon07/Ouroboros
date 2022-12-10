@@ -16,7 +16,6 @@ export default class LGameApi extends AppApi {
             redPositionPath,
             token1Position,
             token2Position,
-            initTime,
             gameOver,
             winningPlayer,
         } = response
@@ -34,7 +33,6 @@ export default class LGameApi extends AppApi {
             ),
             tokenPiece1Position: new Position(token1Position.row, token1Position.col),
             tokenPiece2Position: new Position(token2Position.row, token2Position.col),
-            initTime,
             gameOver,
             winningPlayer,
         }
@@ -59,10 +57,6 @@ export default class LGameApi extends AppApi {
                 col: newPosition.colIdx,
             },
         })
-    }
-
-    async notifyOutOfTime() {
-        await this._callPostAction('/out-of-time', {})
     }
 
     async resetGame() {

@@ -15,7 +15,6 @@ export default function Game({state, callApi}) {
         redPlayerPiecePosition,
         tokenPiece1Position,
         tokenPiece2Position,
-        initTime,
         gameOver,
         winningPlayer,
     } = state
@@ -36,12 +35,6 @@ export default function Game({state, callApi}) {
         }
     }
 
-    const notifyOutOfTime = async () => {
-        await callApi(async (api) => {
-            await api.notifyOutOfTime()
-        })
-    }
-
     const resetGame = async () => {
         await callApi(async (api) => {
             await api.resetGame()
@@ -56,15 +49,9 @@ export default function Game({state, callApi}) {
     }
 
     return <div className="Game">
-        {initTime !== null ?
-            <Timer
-                initTime={initTime}
-                playerTurn={playerMoveMode.player}
-                onOutOfTime={notifyOutOfTime}
-            />
-            :
-            null
-        }
+        <Timer
+            playerTurn={playerMoveMode.player}
+        />
         <Board
             playerMoveMode={playerMoveMode}
             piecePositions={piecePositions}
