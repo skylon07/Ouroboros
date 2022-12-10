@@ -1,8 +1,8 @@
-import PageApi from 'shared/PageApi'
+import AppApi from 'shared/AppApi'
 
 import { PlayerPosition, Position } from './gamestate'
 
-export default class LGameApi extends PageApi {
+export default class LGameApi extends AppApi {
     constructor() {
         super('/l-game')
     }

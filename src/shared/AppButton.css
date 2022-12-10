@@ -1,4 +1,4 @@
-.PageButton {
+.AppButton {
     padding: 4px;
     padding-left: 10px;
     padding-right: 10px;
@@ -8,12 +8,12 @@
     background-color: rgb(var(--color-accent-blue));
     font-size: 110%;
 }
-.PageButton:hover {
+.AppButton:hover {
     padding: 2px;
     padding-left: 8px;
     padding-right: 8px;
     border-width: 4px;
 }
-.PageButton:active {
+.AppButton:active {
     filter: brightness(50%);
 }

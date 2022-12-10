@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 
-import PageButton from 'shared/PageButton'
+import AppButton from 'shared/AppButton'
 
 import './PyFileUploader.css'
 
-export default function PyFileUploader({ pageApi, onUploadStart, onUploadComplete }) {
+export default function PyFileUploader({ appApi, onUploadStart, onUploadComplete }) {
     const fileInputRef = useRef(null)
     const activateFileInput = () => {
         fileInputRef.current.click()
@@ -27,7 +27,7 @@ export default function PyFileUploader({ pageApi, onUploadStart, onUploadComplet
 
         const fileInput = fileInputRef.current
         const pyFile = fileInput.files[0]
-        await pageApi.updatePyFile(pyFile)
+        await appApi.updatePyFile(pyFile)
         fileInput.value = ""
         updateButtonText()
 
@@ -38,10 +38,10 @@ export default function PyFileUploader({ pageApi, onUploadStart, onUploadComplet
     
     return <div className="PyFileUploader">
         <div className="PyFileUploader-Upload">
-            <PageButton onClick={activateFileInput}>{filePickerText}</PageButton>
+            <AppButton onClick={activateFileInput}>{filePickerText}</AppButton>
             <input type="file" ref={fileInputRef} onChange={updateButtonText} />
         </div>
         <div className="PyFileUploader-Spacer" />
-        <PageButton onClick={uploadPyFile}>Upload/Execute</PageButton>
+        <AppButton onClick={uploadPyFile}>Upload/Execute</AppButton>
     </div>
 }

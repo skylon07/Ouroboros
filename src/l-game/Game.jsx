@@ -8,7 +8,7 @@ import { PlayerMoveMode, Position, PlayerPosition } from './gamestate'
 import Board from './Board'
 import Timer from './Timer'
 import { useConstant } from './hooks'
-import { usePageApi, usePlainPageApiCallback } from 'shared/hooks'
+import { useAppApi, usePlainAppApiCallback } from 'shared/hooks'
 
 import './Game.css'
 
@@ -73,7 +73,7 @@ export default function Game({onResetGame, api}) {
         }
     }
 
-    const [initTime] = usePlainPageApiCallback(() => api.fetchInitTime())
+    const [initTime] = usePlainAppApiCallback(() => api.fetchInitTime())
 
     const [winningPlayer, setWinningPlayer] = useState(null)
     useEffect(() => {
@@ -120,8 +120,8 @@ export default function Game({onResetGame, api}) {
 }
 
 function usePlayerMoveMode(api) {
-    const [playerTurn, invalidatePlayerTurn] = usePlainPageApiCallback(() => api.fetchPlayerTurn())
-    const [moveMode, invalidateMoveMode] = usePlainPageApiCallback(() => api.fetchMoveMode())
+    const [playerTurn, invalidatePlayerTurn] = usePlainAppApiCallback(() => api.fetchPlayerTurn())
+    const [moveMode, invalidateMoveMode] = usePlainAppApiCallback(() => api.fetchMoveMode())
     const playerMoveMode = new PlayerMoveMode(playerTurn, moveMode)
     // // ORIGINAL
     // const [playerMoveMode, setPlayerMoveMode] = useState(initPlayerMoveMode)
@@ -144,7 +144,7 @@ function usePlayerMoveMode(api) {
 }
 
 function usePlayerPiecePositions(api, playerMoveMode) {
-    const [playerPiecePositions, invalidatePlayerPiecePositions] = usePlainPageApiCallback(() => api.fetchPlayerPieces())
+    const [playerPiecePositions, invalidatePlayerPiecePositions] = usePlainAppApiCallback(() => api.fetchPlayerPieces())
     const setActivePlayerPiecePosition = async (newActivePlayerPiecePosition) => {
         await api.setActivePlayerPosition(newActivePlayerPiecePosition)
         invalidatePlayerPiecePositions()
@@ -168,7 +168,7 @@ function usePlayerPiecePositions(api, playerMoveMode) {
 }
 
 function useTokenPiecePositions(api) {
-    const [tokenPositions, invalidateTokenPiecePositions] = usePlainPageApiCallback(() => api.fetchTokenPieces())
+    const [tokenPositions, invalidateTokenPiecePositions] = usePlainAppApiCallback(() => api.fetchTokenPieces())
     const {tokenPiece1Position, tokenPiece2Position} = tokenPositions
     const setTokenPiece1Position = async (newPosition) => {
         await api.setTokenPiecePosition(1, newPosition)
@@ -182,7 +182,7 @@ function useTokenPiecePositions(api) {
 }
 
 function useGameOverState(api) {
-    const [gameOver, invalidateGameOver] = usePlainPageApiCallback(() => api.fetchGameOver())
+    const [gameOver, invalidateGameOver] = usePlainAppApiCallback(() => api.fetchGameOver())
     return [gameOver, invalidateGameOver]
 }
 

@@ -1,6 +1,6 @@
-import PageApi from 'shared/PageApi'
+import AppApi from 'shared/AppApi'
 
-export default class ConsoleApi extends PageApi {
+export default class ConsoleApi extends AppApi {
     constructor() {
         super('/console')
     }

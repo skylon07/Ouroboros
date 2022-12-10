@@ -1,13 +1,13 @@
 import { useRef, useEffect, useState } from 'react'
 
-export function usePlainPageApiCallback(pageApiFn) {
-    const pageApiFnRef = useRef(pageApiFn)
-    pageApiFnRef.current = pageApiFn
+export function usePlainAppApiCallback(appApiFn) {
+    const appApiFnRef = useRef(appApiFn)
+    appApiFnRef.current = appApiFn
     const [value, setValue] = useState(null)
     useEffect(() => {
         if (value === null) {
             const asyncFn = async () => {
-                const newValue = await pageApiFnRef.current()
+                const newValue = await appApiFnRef.current()
                 setValue(newValue)
             }
             asyncFn()
@@ -17,10 +17,10 @@ export function usePlainPageApiCallback(pageApiFn) {
     return [value, invalidate]
 }
 
-export function usePageApi(PageApiClass) {
+export function useAppApi(AppApiClass) {
     const apiRef = useRef(null)
     if (apiRef.current == null) {
-        apiRef.current = new PageApiClass()
+        apiRef.current = new AppApiClass()
     }
     const api = apiRef.current
 

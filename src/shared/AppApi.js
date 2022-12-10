@@ -2,10 +2,11 @@ import axios from 'axios'
 
 import { readFile } from 'shared/files'
 
-export default class PageApi {
+// TODO: rename to AppApi (and other Page -> App references)
+export default class AppApi {
     constructor(apiBase) {
         if (typeof apiBase !== "string" || apiBase[0] !== "/") {
-            throw new Error("A PageApi was created without a valid api base")
+            throw new Error("An AppApi was created without a valid api base")
         }
         this._apiBase = "/ouroboros-api" + apiBase
         this._consoleListener = null
@@ -48,7 +49,7 @@ export default class PageApi {
 
     async _callGetAction(actionUrl) {
         if (typeof actionUrl !== "string" || actionUrl[0] !== "/") {
-            throw new Error("A PageApi attempted to call an action (get) with an invalid action url")
+            throw new Error("An AppApi attempted to call an action (get) with an invalid action url")
         }
         const response = await axios.get(`${this._apiBase}${actionUrl}`)
         return response.data
@@ -56,7 +57,7 @@ export default class PageApi {
 
     async _callPostAction(actionUrl, requestData) {
         if (typeof actionUrl !== "string" || actionUrl[0] !== "/") {
-            throw new Error("A PageApi attempted to call an action (post) with an invalid action url")
+            throw new Error("An AppApi attempted to call an action (post) with an invalid action url")
         }
         const response = await axios.post(`${this._apiBase}${actionUrl}`, requestData)
         return response.data

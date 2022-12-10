@@ -1,17 +1,17 @@
 import { useState } from 'react'
 
-import PageHeader from 'shared/PageHeader'
-import PageTitle from 'shared/PageTitle'
+import AppHeader from 'shared/AppHeader'
+import AppTitle from 'shared/AppTitle'
 import PyFileUploader from 'shared/PyFileUploader'
-import { usePageApi } from 'shared/hooks'
+import { useAppApi } from 'shared/hooks'
 
 import ConsoleApi from './ConsoleApi'
 import driverDocs from './driverdocs.txt'
 
-import './ConsolePage.css'
+import './ConsoleApp.css'
 
-export default function ConsolePage() {
-    const consoleApi = usePageApi(ConsoleApi)
+export default function ConsoleApp() {
+    const consoleApi = useAppApi(ConsoleApi)
     
     const [consoleMessages, setConsoleMessages] = useState("")
 
@@ -21,14 +21,14 @@ export default function ConsolePage() {
         setConsoleMessages(messages)
     }
 
-    return <div className="ConsolePage">
-        <PageHeader docRef={driverDocs} />
+    return <div className="ConsoleApp">
+        <AppHeader docRef={driverDocs} />
         <PyFileUploader
-            pageApi={consoleApi}
+            appApi={consoleApi}
             onUploadStart={resetConsole}
             onUploadComplete={getConsoleMessages}
         />
-        <PageTitle title="Echo Console" />
+        <AppTitle title="Echo Console" />
         <br />
         <textarea value={consoleMessages} readOnly />
     </div>

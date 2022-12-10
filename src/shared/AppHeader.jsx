@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Link from 'shared/Link'
-import PageButton from 'shared/PageButton'
+import AppButton from 'shared/AppButton'
 
-import './PageHeader.css'
+import './AppHeader.css'
 
-export default function PageHeader({docRef}) {
+export default function AppHeader({docRef}) {
     const [docShown, setDocShown] = useState(false)
     const showDoc = () => setDocShown(true)
     const hideDoc = () => setDocShown(false)
@@ -26,16 +26,16 @@ export default function PageHeader({docRef}) {
 
     const docVisibleClass = docShown ? "" : "hidden"
 
-    return <div className="PageHeader">
-        <div className="PageHeader-TopBar">
-            <div className="PageHeader-HomeLink">
+    return <div className="AppHeader">
+        <div className="AppHeader-TopBar">
+            <div className="AppHeader-HomeLink">
                 <Link to="/">Back to Home</Link>
             </div>
-            <div className="PageHeader-Spacer" />
-            <PageButton onClick={showDoc}>Show Driver Docs</PageButton>
+            <div className="AppHeader-Spacer" />
+            <AppButton onClick={showDoc}>Show Driver Docs</AppButton>
         </div>
-        <div className={`PageHeader-DocViewer ${docVisibleClass}`}>
-            <PageButton onClick={hideDoc}>✕</PageButton>
+        <div className={`AppHeader-DocViewer ${docVisibleClass}`}>
+            <AppButton onClick={hideDoc}>✕</AppButton>
             <pre>{docText}</pre>
         </div>
     </div>
