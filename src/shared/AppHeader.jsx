@@ -37,6 +37,7 @@ export default function AppHeader({docRef}) {
         <div className={`AppHeader-DocViewer ${docVisibleClass}`}>
             <AppButton onClick={hideDoc}>✕</AppButton>
             <pre>{docText}</pre>
+            <div className="AppHeader-DocViewerBottomSpacer" />
         </div>
     </div>
 }

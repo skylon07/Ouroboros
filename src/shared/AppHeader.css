@@ -12,14 +12,19 @@
 }
 
 .AppHeader-DocViewer {
-    position: absolute;
+    position: fixed;
     z-index: 999;
     top: 0px;
     left: 0px;
     width: 100vw;
     height: 100vh;
+    overflow-y: scroll;
+    overscroll-behavior: contain;
     padding: 30px;
-    background-color: rgba(var(--color-shadow-black), 0.97);
+    background-color: rgba(var(--color-shadow-black), 0.95);
+}
+.AppHeader-DocViewerBottomSpacer {
+    height: 100vh;
 }
 
 .AppHeader-DocViewer.hidden {
@@ -48,4 +53,5 @@
 
 .AppHeader-DocViewer pre {
     color: rgb(var(--color-soft-white));
+    background-color: rgba(0, 0, 0, 0);
 }
