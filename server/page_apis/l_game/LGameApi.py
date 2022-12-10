@@ -265,19 +265,19 @@ class LGameApi(ServerApi):
             if self._useDefaultImplementation:
                 self._defaultSetActivePlayerPosition(positionPath)
             else:
-                self._setActivePlayerPosition(positionPath)
+                self._execInContext(lambda: self._setActivePlayerPosition(positionPath))
         elif action == '/token-position':
             id = requestDict['id']
             position = requestDict['position']
             if self._useDefaultImplementation:
                 self._defaultSetTokenPiecePosition(id, position)
             else:
-                self._setTokenPiecePosition(id, position)
+                self._execInContext(lambda: self._setTokenPiecePosition(id, position))
         elif action == '/reset':
             if self._useDefaultImplementation:
                 self._defaultResetGame()
             else:
-                self._resetGame()
+                self._execInContext(lambda: self._resetGame())
 
     # default implementations
     def _defaultSetActivePlayerPosition(self, newPositionPath):
