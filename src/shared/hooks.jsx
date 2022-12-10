@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import AppApi from './AppApi'
 
@@ -13,22 +13,27 @@ export function useAppState(AppApiClass, appStateConstructor, initStateConstruct
         return () => api.cancelConsoleListener()
     }, [api])
 
-    const [appState, setAppState] = useState(initStateConstructor)
+    const appStateRef = useRef(null)
+    if (appStateRef.current === null) {
+        appStateRef.current = initStateConstructor()
+    }
+    const [invalidated, setInvalidated] = useState(false)
     useEffect(() => {
-        if (appState === null) {
+        if (invalidated) {
             const asyncFn = async () => {
                 const newAppState = await appStateConstructor(api)
-                setAppState(newAppState)
+                appStateRef.current = newAppState
+                setInvalidated(false)
             }
             asyncFn()
         }
-    }, [appState, appStateConstructor, api])
-    const invalidateAppState = () => setAppState(null)
+    }, [invalidated, appStateConstructor, api])
+    const invalidateAppState = () => setInvalidated(true)
 
-    const callAppApi = async (callerFn) => {
-        await callerFn(api)
+    const callAppApi = async (asyncCallerFn) => {
+        await asyncCallerFn(api)
         invalidateAppState()
     }
 
-    return [appState, callAppApi]
+    return [appStateRef.current, callAppApi]
 }
