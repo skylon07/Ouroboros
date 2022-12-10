@@ -21,8 +21,10 @@ export default function TokenPiece({position, isPickedUp, mouseHandler}) {
         throw new TypeError("TokenPiece must be given a position: Position prop")
     }
 
-    const offsetYCss = `calc(${position?.rowIdx || -999} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
-    const offsetXCss = `calc(${position?.colIdx || -999} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
+    const offsetRow = position !== null ? position.rowIdx : -999
+    const offsetCol = position !== null ? position.colIdx : -999
+    const offsetYCss = `calc(${offsetRow} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
+    const offsetXCss = `calc(${offsetCol} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
 
     const style = {
         top: offsetYCss,
