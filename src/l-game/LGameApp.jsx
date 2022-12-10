@@ -17,7 +17,7 @@ export default function LGameApp() {
         return gameState
     })
 
-    const [gameApp, resetConsoleApp] = useAppComponent(lGameState, () => {
+    const [gameApp, resetConsoleApp] = useAppComponent(lGameApi, lGameState, () => {
         return <Game state={lGameState} callApi={callLGameApi} />
     })
     

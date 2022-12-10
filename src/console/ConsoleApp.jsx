@@ -18,7 +18,7 @@ export default function ConsoleApp() {
         }
     })
 
-    const [consoleApp, resetConsoleApp] = useAppComponent(consoleState, () => {
+    const [consoleApp, resetConsoleApp] = useAppComponent(consoleApi, consoleState, () => {
         return <Console state={consoleState} callApi={callConsoleApi} />
     })
 

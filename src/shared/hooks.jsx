@@ -42,6 +42,11 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
     }, [invalidated, appStateConstructor, appApi])
     const invalidateAppState = useCallback(() => setInvalidated(true), [])
 
+    useEffect(() => {
+        const interval = setInterval(invalidateAppState, 300)
+        return () => clearInterval(interval)
+    }, [invalidateAppState])
+
     const callAppApi = useCallback(async (asyncCallerFn) => {
         if (typeof asyncCallerFn === "function") {
             await asyncCallerFn(appApi)
@@ -52,10 +57,10 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
     return [appStateRef.current, callAppApi]
 }
 
-export function useAppComponent(appState, componentFactory) {
+export function useAppComponent(appApi, appState, componentFactory) {
     const [component, setComponent] = useState(null)
+    
     const mountComponent = useCallback(() => setComponent(componentFactory()), [componentFactory])
-
     useEffect(() => {
         if (component === null && appState !== null) {
             mountComponent()
@@ -63,9 +68,10 @@ export function useAppComponent(appState, componentFactory) {
     }, [appState, component, mountComponent])
 
     const resetComponent = useCallback(() => setComponent(null), [])
+    useEffect(() => {
+        appApi.listenForPyFileUpdated(resetComponent)
+        return () => appApi.cancelPyFileUpdatedListener()
+    }, [appApi, resetComponent])
 
-    return [
-        appState !== null ? component : null,
-        resetComponent
-    ]
+    return [component, resetComponent]
 }

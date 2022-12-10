@@ -10,6 +10,7 @@ export default class AppApi {
         }
         this._apiBase = "/ouroboros-api" + apiBase
         this._consoleListener = null
+        this._pyFileListener = null
         this._printedLogs = {}
     }
 
@@ -25,9 +26,27 @@ export default class AppApi {
             }
         }
     }
+    
+    listenForPyFileUpdated(callback) {
+        if (this._pyFileListener === null) {
+            let lastFileUpdated = null
+            this._pyFileListener = setInterval(async () => {
+                const response = await axios.get(this._apiBase)
+                if (response.data !== lastFileUpdated) {
+                    callback()
+                    lastFileUpdated = response.data
+                }
+            }, 500)
+        }
+    }
+
+    cancelPyFileUpdatedListener() {
+        clearInterval(this._pyFileListener)
+        this._pyFileListener = null
+    }
 
     listenForConsole() {
-        if (this._consoleListener == null) {
+        if (this._consoleListener === null) {
             this._consoleListener = setInterval(async () => {
                 const response = await axios.get(this._apiBase, {params: {logs: true}})
                 const logs = response.data

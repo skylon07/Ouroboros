@@ -3,6 +3,7 @@ import sys
 import importlib
 import traceback
 import re
+from datetime import datetime
 
 class ServerApi(ABC):
     __logCount = 0
@@ -11,14 +12,14 @@ class ServerApi(ABC):
         assert apiPath[0] == "/" and apiPath[-1] != "/", "Invalid api path: must start (but not end) with a slash"
         self._apiPath = apiPath
         self._driver = driver
-        self._lastFileRequest = None
+        self._lastRequestDate = None
         self._logs = []
 
     # overridable methods
     def onGetLogs(self, queryParams):
         pass
 
-    def onGetFile(self, queryParams):
+    def onGetFileUpdated(self, queryParams):
         pass
 
     def onPostFile(self, queryParams, requestDict):
@@ -30,13 +31,13 @@ class ServerApi(ABC):
             self.onGetLogs(queryParams)
             return self._logs
         else:
-            self.onGetFile(queryParams)
-            return self._lastFileRequest
+            self.onGetFileUpdated(queryParams)
+            return self._lastRequestDate
 
     def post(self, queryParams, requestDict):
         self.onPostFile(queryParams, requestDict)
         self.__execPyFile(requestDict['pyfile'])
-        self._lastFileRequest = requestDict
+        self._lastRequestDate = str(datetime.utcnow())
 
     def __execPyFile(self, fileData):
         oldPath = sys.path
