@@ -2,6 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 
 import AppApi from './AppApi'
 
+export function useAppApi(appApiFactory) {
+    const [appApi] = useState(appApiFactory)
+    
+    useEffect(() => {
+        appApi.listenForConsole()
+        return () => appApi.cancelConsoleListener()
+    }, [appApi])
+
+    return appApi
+}
+
 export function useAppState(AppApiClass, appStateConstructor, initStateConstructor = null) {
     if (!(AppApiClass.prototype instanceof AppApi)) {
         throw new Error("useAppState() received an invalid AppApiClass")
