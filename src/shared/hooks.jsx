@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import AppApi from './AppApi'
 
-export function useAppApi(appApiFactory) {
-    const [appApi] = useState(appApiFactory)
+export function useAppApi(AppApiClass) {
+    const [appApi] = useState(() => new AppApiClass())
     if (!(appApi instanceof AppApi)) {
         throw new Error("useAppApi() received an invalid appApi instance")
     }
