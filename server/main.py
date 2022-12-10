@@ -139,6 +139,11 @@ class ServerHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    # allow address from last instance to free itself
+    # (when restarting in debug mode)
+    from time import sleep
+    sleep(0.6)
+
     with HTTPServer((HOSTNAME, PORT), ServerHandler) as server:
         print("Server started sucessfully!")
         print(f"Access at http://{HOSTNAME}:{PORT}{DIRECTORY}")
