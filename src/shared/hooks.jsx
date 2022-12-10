@@ -1,33 +1,30 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function usePlainAppApiCallback(appApiFn) {
-    const appApiFnRef = useRef(appApiFn)
-    appApiFnRef.current = appApiFn
-    const [value, setValue] = useState(null)
-    useEffect(() => {
-        if (value === null) {
-            const asyncFn = async () => {
-                const newValue = await appApiFnRef.current()
-                setValue(newValue)
-            }
-            asyncFn()
-        }
-    }, [value])
-    const invalidate = () => setValue(null)
-    return [value, invalidate]
-}
+import AppApi from './AppApi'
 
-export function useAppApi(AppApiClass) {
-    const apiRef = useRef(null)
-    if (apiRef.current == null) {
-        apiRef.current = new AppApiClass()
+export function useAppState(AppApiClass, appStateConstructor) {
+    if (!(AppApiClass.prototype instanceof AppApi)) {
+        throw new Error("useAppState() received an invalid AppApiClass")
     }
-    const api = apiRef.current
+    const [api] = useState(() => new AppApiClass())
 
     useEffect(() => {
         api.listenForConsole()
         return () => api.cancelConsoleListener()
     }, [api])
 
-    return api
+    const [appState, setAppState] = useState(null)
+    useEffect(() => {
+        if (appState === null) {
+            setAppState(appStateConstructor(api))
+        }
+    }, [appState, appStateConstructor, api])
+    const invalidateAppState = () => setAppState(null)
+
+    const callAppApi = async (callerFn) => {
+        await callerFn(api)
+        invalidateAppState()
+    }
+
+    return [appState, callAppApi]
 }
