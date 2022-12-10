@@ -13,19 +13,13 @@ export function useAppApi(appApiFactory) {
     return appApi
 }
 
-export function useAppState(AppApiClass, appStateConstructor, initStateConstructor = null) {
-    if (!(AppApiClass.prototype instanceof AppApi)) {
+export function useAppState(appApi, appStateConstructor, initStateConstructor = null) {
+    if (!(appApi instanceof AppApi)) {
         throw new Error("useAppState() received an invalid AppApiClass")
     }
-    const [api] = useState(() => new AppApiClass())
-
-    useEffect(() => {
-        api.listenForConsole()
-        return () => api.cancelConsoleListener()
-    }, [api])
 
     const appStateRef = useRef(null)
-    if (appStateRef.current === null) 
+    if (appStateRef.current === null) {
         if (typeof initStateConstructor === "function") {
             appStateRef.current = initStateConstructor()
         } else {
@@ -36,17 +30,17 @@ export function useAppState(AppApiClass, appStateConstructor, initStateConstruct
     useEffect(() => {
         if (invalidated) {
             const asyncFn = async () => {
-                const newAppState = await appStateConstructor(api)
+                const newAppState = await appStateConstructor(appApi)
                 appStateRef.current = newAppState
                 setInvalidated(false)
             }
             asyncFn()
         }
-    }, [invalidated, appStateConstructor, api])
+    }, [invalidated, appStateConstructor, appApi])
     const invalidateAppState = () => setInvalidated(true)
 
     const callAppApi = async (asyncCallerFn) => {
-        await asyncCallerFn(api)
+        await asyncCallerFn(appApi)
         invalidateAppState()
     }
 
