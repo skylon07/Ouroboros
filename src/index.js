@@ -5,8 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import axios from 'axios'
 
 import HomePage from 'home/HomePage'
-import ConsolePage from 'console/ConsolePage'
-import LGamePage from 'l-game/LGamePage'
+import ConsoleApp from 'console/ConsoleApp'
+// import LGameApp from 'l-game/LGameApp'
 
 import './index.css'
 
@@ -21,11 +21,11 @@ root.render(
                 />
                 <Route
                     path='/console'
-                    element={<ConsolePage />}
+                    element={<ConsoleApp />}
                 />
                 <Route
                     path='/l-game'
-                    element={<LGamePage />}
+                    element={null /* <LGameApp /> */}
                 />
             </Routes>
         </BrowserRouter>
