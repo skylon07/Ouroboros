@@ -58,20 +58,23 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
 }
 
 export function useAppComponent(appApi, appState, componentFactory) {
-    const [component, setComponent] = useState(null)
-    
-    const mountComponent = useCallback(() => setComponent(componentFactory()), [componentFactory])
-    useEffect(() => {
-        if (component === null && appState !== null) {
-            mountComponent()
-        }
-    }, [appState, component, mountComponent])
+    const [isMounted, setIsMounted] = useState(false)
 
-    const resetComponent = useCallback(() => setComponent(null), [])
+    useEffect(() => {
+        if (!isMounted && appState !== null) {
+            setIsMounted(true)
+        }
+    }, [isMounted, appState])
+
+    const resetComponent = useCallback(() => setIsMounted(false), [])
+    
     useEffect(() => {
         appApi.listenForPyFileUpdated(resetComponent)
         return () => appApi.cancelPyFileUpdatedListener()
     }, [appApi, resetComponent])
+
+    const shouldRender = isMounted && appState !== null
+    const component = shouldRender ? componentFactory() : null
 
     return [component, resetComponent]
 }
