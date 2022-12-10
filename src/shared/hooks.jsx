@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import AppApi from './AppApi'
 
-export function useAppState(AppApiClass, appStateConstructor, initStateConstructor) {
+export function useAppState(AppApiClass, appStateConstructor, initStateConstructor = null) {
     if (!(AppApiClass.prototype instanceof AppApi)) {
         throw new Error("useAppState() received an invalid AppApiClass")
     }
@@ -14,8 +14,12 @@ export function useAppState(AppApiClass, appStateConstructor, initStateConstruct
     }, [api])
 
     const appStateRef = useRef(null)
-    if (appStateRef.current === null) {
-        appStateRef.current = initStateConstructor()
+    if (appStateRef.current === null) 
+        if (typeof initStateConstructor === "function") {
+            appStateRef.current = initStateConstructor()
+        } else {
+            appStateRef.current = initStateConstructor
+        }
     }
     const [invalidated, setInvalidated] = useState(false)
     useEffect(() => {
