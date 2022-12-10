@@ -4,6 +4,9 @@ import AppApi from './AppApi'
 
 export function useAppApi(appApiFactory) {
     const [appApi] = useState(appApiFactory)
+    if (!(appApi instanceof AppApi)) {
+        throw new Error("useAppApi() received an invalid appApi instance")
+    }
     
     useEffect(() => {
         appApi.listenForConsole()
@@ -15,7 +18,7 @@ export function useAppApi(appApiFactory) {
 
 export function useAppState(appApi, appStateConstructor, initStateConstructor = null) {
     if (!(appApi instanceof AppApi)) {
-        throw new Error("useAppState() received an invalid AppApiClass")
+        throw new Error("useAppState() received an invalid appApi instance")
     }
 
     const appStateRef = useRef(null)
