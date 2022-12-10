@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import AppApi from './AppApi'
 
-export function useAppState(AppApiClass, appStateConstructor) {
+export function useAppState(AppApiClass, appStateConstructor, initStateConstructor) {
     if (!(AppApiClass.prototype instanceof AppApi)) {
         throw new Error("useAppState() received an invalid AppApiClass")
     }
@@ -13,7 +13,7 @@ export function useAppState(AppApiClass, appStateConstructor) {
         return () => api.cancelConsoleListener()
     }, [api])
 
-    const [appState, setAppState] = useState(null)
+    const [appState, setAppState] = useState(initStateConstructor)
     useEffect(() => {
         if (appState === null) {
             const asyncFn = async () => {
