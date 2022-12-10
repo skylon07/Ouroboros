@@ -323,7 +323,7 @@ class LGameApi(ServerApi):
         driver.setToken1Position({'row': 0, 'col': 0})
         driver.setToken2Position({'row': 3, 'col': 3})
         driver.setGameOver(False)
-        driver.setWinningPlayer(None)
+        driver.setWinningPlayer("")
 
     def _defaultHelper_opposite(self, player):
         oppositeTurn = {
