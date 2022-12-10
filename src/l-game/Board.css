@@ -1,10 +1,10 @@
 :root {
-    --BoardSquare-border-size: calc(0.01 * var(--Game-main-dimension));
-    --Board-extra-padding: calc(0.01 * var(--Game-main-dimension));
+    --l-game--BoardSquare-border-size: calc(0.01 * var(--l-game--Game-main-dimension));
+    --l-game--Board-extra-padding: calc(0.01 * var(--l-game--Game-main-dimension));
 
-    --BoardSquare-overlap-compensation: calc(-0.5 * var(--BoardSquare-border-size));
-    --Board-neg-margin-compensation: var(--BoardSquare-border-size);
-    --Board-total-padding: calc(var(--Board-extra-padding) + var(--Board-neg-margin-compensation));
+    --l-game--BoardSquare-overlap-compensation: calc(-0.5 * var(--l-game--BoardSquare-border-size));
+    --l-game--Board-neg-margin-compensation: var(--l-game--BoardSquare-border-size);
+    --l-game--Board-total-padding: calc(var(--l-game--Board-extra-padding) + var(--l-game--Board-neg-margin-compensation));
 }
 
 .Board {
@@ -12,7 +12,7 @@
     left: 0px;
     display: flex;
     flex-flow: column nowrap;
-    padding: var(--Board-total-padding);
+    padding: var(--l-game--Board-total-padding);
     width: 100%;
     height: 100%;
 }
@@ -27,11 +27,11 @@
 }
 
 .BoardSquare {
-    margin: var(--BoardSquare-overlap-compensation);
-    width: calc(0.25 * var(--Game-main-dimension));
-    height: calc(0.25 * var(--Game-main-dimension));
+    margin: var(--l-game--BoardSquare-overlap-compensation);
+    width: calc(0.25 * var(--l-game--Game-main-dimension));
+    height: calc(0.25 * var(--l-game--Game-main-dimension));
     box-sizing: border-box;
-    border: var(--BoardSquare-border-size) solid;
+    border: var(--l-game--BoardSquare-border-size) solid;
 }
 
 .BoardSquare.selected::after {
@@ -39,49 +39,49 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    background-color: var(--color-deep-black);
+    background-color: var(--l-game--color-deep-black);
     opacity: 36%;
 }
 .Board.player-blue.mode-player .BoardSquare.selected::after {
-    background-color: var(--color-blue-player);
+    background-color: var(--l-game--color-blue-player);
 }
 .Board.player-red.mode-player .BoardSquare.selected::after {
-    background-color: var(--color-red-player);
+    background-color: var(--l-game--color-red-player);
 }
 
 .Board-Skip-Container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: calc(0.04 * var(--Game-main-dimension));
-    width: calc(var(--Game-main-dimension) - 2*var(--Board-total-padding));
+    padding: calc(0.04 * var(--l-game--Game-main-dimension));
+    width: calc(var(--l-game--Game-main-dimension) - 2*var(--l-game--Board-total-padding));
     box-sizing: border-box;
 }
 
 .Board-Skip {
     position: relative;
     opacity: 50%;
-    width: calc(0.20 * var(--Game-main-dimension));
-    padding: calc(0.015 * var(--Game-main-dimension));
+    width: calc(0.20 * var(--l-game--Game-main-dimension));
+    padding: calc(0.015 * var(--l-game--Game-main-dimension));
     border: none;
-    border-radius: calc(0.02 * var(--Game-main-dimension));
-    font-size: calc(0.04 * var(--Game-main-dimension));
+    border-radius: calc(0.02 * var(--l-game--Game-main-dimension));
+    font-size: calc(0.04 * var(--l-game--Game-main-dimension));
 }
 .Board-Skip.hidden {
     visibility: hidden;
 }
 
 .Board.player-blue .Board-Skip {
-    background-color: var(--color-blue-player);
+    background-color: var(--l-game--color-blue-player);
 }
 .Board.player-red .Board-Skip {
-    background-color: var(--color-red-player);
+    background-color: var(--l-game--color-red-player);
 }
 .Board .Board-Skip:hover {
     opacity: 80%;
 }
 .Board .Board-Skip:active {
-    background-color: var(--color-space-gray);
+    background-color: var(--l-game--color-space-gray);
 }
 
 .Board-Skip::after {
@@ -92,7 +92,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border: calc(0.005 * var(--Game-main-dimension)) solid;
-    border-radius: calc(0.02 * var(--Game-main-dimension));
+    border: calc(0.005 * var(--l-game--Game-main-dimension)) solid;
+    border-radius: calc(0.02 * var(--l-game--Game-main-dimension));
     opacity: 60%;
 }

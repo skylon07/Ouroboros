@@ -23,8 +23,8 @@ export default function TokenPiece({position, isPickedUp, mouseHandler}) {
 
     const offsetRow = position !== null ? position.rowIdx : -999
     const offsetCol = position !== null ? position.colIdx : -999
-    const offsetYCss = `calc(${offsetRow} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
-    const offsetXCss = `calc(${offsetCol} * var(--TokenPiece-size) + var(--TokenPiece-indent))`
+    const offsetYCss = `calc(${offsetRow} * var(--l-game--TokenPiece-size) + var(--l-game--TokenPiece-indent))`
+    const offsetXCss = `calc(${offsetCol} * var(--l-game--TokenPiece-size) + var(--l-game--TokenPiece-indent))`
 
     const style = {
         top: offsetYCss,

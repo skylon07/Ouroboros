@@ -1,11 +1,11 @@
 :root {
-    --Game-main-dimension: min(90vw, 80vh);
+    --l-game--Game-main-dimension: min(90vw, 80vh);
 }
 
 .Game {
     position: relative;
-    width: var(--Game-main-dimension);
-    height: var(--Game-main-dimension);
+    width: var(--l-game--Game-main-dimension);
+    height: var(--l-game--Game-main-dimension);
 }
 
 .Game-GameOver {
@@ -17,31 +17,31 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: var(--Game-main-dimension);
-    height: var(--Game-main-dimension);
-    background-color: var(--color-deep-black-trans);
-    color: var(--color-soft-white);
-    font-size: calc(0.1 * var(--Game-main-dimension));
+    width: var(--l-game--Game-main-dimension);
+    height: var(--l-game--Game-main-dimension);
+    background-color: var(--l-game--color-deep-black-trans);
+    color: var(--l-game--color-soft-white);
+    font-size: calc(0.1 * var(--l-game--Game-main-dimension));
 }
 
 .Game-GameOver button {
-    margin-top: calc(0.1 * var(--Game-main-dimension));
-    padding: calc(0.02 * var(--Game-main-dimension));
-    border: calc(0.01 * var(--Game-main-dimension)) solid;
-    border-color: var(--color-space-gray);
-    border-radius: calc(0.05 * var(--Game-main-dimension));
+    margin-top: calc(0.1 * var(--l-game--Game-main-dimension));
+    padding: calc(0.02 * var(--l-game--Game-main-dimension));
+    border: calc(0.01 * var(--l-game--Game-main-dimension)) solid;
+    border-color: var(--l-game--color-space-gray);
+    border-radius: calc(0.05 * var(--l-game--Game-main-dimension));
     box-sizing: border-box;
-    background-color: var(--color-space-gray);
-    color: var(--color-soft-white);
-    font-size: calc(0.07 * var(--Game-main-dimension));
+    background-color: var(--l-game--color-space-gray);
+    color: var(--l-game--color-soft-white);
+    font-size: calc(0.07 * var(--l-game--Game-main-dimension));
 }
 
 .Game-GameOver button:hover {
-    border-color: var(--color-soft-white);
+    border-color: var(--l-game--color-soft-white);
 }
 
 .Game-GameOver button:active {
-    border-color: var(--color-space-gray);
-    background-color: var(--color-deep-black);
-    color: var(--color-space-gray);
+    border-color: var(--l-game--color-space-gray);
+    background-color: var(--l-game--color-deep-black);
+    color: var(--l-game--color-space-gray);
 }

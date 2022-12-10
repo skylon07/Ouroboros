@@ -1,12 +1,12 @@
 :root {
-    --TokenPiece-size: calc(var(--PlayerPiece-size) / 4);
-    --TokenPiece-indent: var(--PlayerPiece-indent);
+    --l-game--TokenPiece-size: calc(var(--l-game--PlayerPiece-size) / 4);
+    --l-game--TokenPiece-indent: var(--l-game--PlayerPiece-indent);
 }
 
 .TokenPiece {
     position: absolute;
-    width: var(--TokenPiece-size);
-    height: var(--TokenPiece-size);
+    width: var(--l-game--TokenPiece-size);
+    height: var(--l-game--TokenPiece-size);
 }
 
 .TokenPiece.pickedUp {
@@ -25,27 +25,27 @@
     width: 80%;
     height: 80%;
     box-sizing: border-box;
-    background-color: var(--color-space-gray);
+    background-color: var(--l-game--color-space-gray);
     border-radius: 50%;
 }
 
 .TokenPiece.pickedUp .TokenPiece-Circle {
-    border: calc(0.01 * var(--Game-main-dimension)) solid var(--color-deep-black);
+    border: calc(0.01 * var(--l-game--Game-main-dimension)) solid var(--l-game--color-deep-black);
     position: relative;
-    top: -calc(0.02 * var(--Game-main-dimension));
-    left: -calc(0.02 * var(--Game-main-dimension));
+    top: -calc(0.02 * var(--l-game--Game-main-dimension));
+    left: -calc(0.02 * var(--l-game--Game-main-dimension));
 }
 
 .TokenPiece.pickedUp .TokenPiece-Circle::after {
     content: "";
     z-index: -1;
     position: absolute;
-    top: calc(0.025 * var(--Game-main-dimension));
-    left: calc(0.025 * var(--Game-main-dimension));
-    width: calc(100% + calc(0.015 * var(--Game-main-dimension)));
-    height: calc(100% + calc(0.015 * var(--Game-main-dimension)));
+    top: calc(0.025 * var(--l-game--Game-main-dimension));
+    left: calc(0.025 * var(--l-game--Game-main-dimension));
+    width: calc(100% + calc(0.015 * var(--l-game--Game-main-dimension)));
+    height: calc(100% + calc(0.015 * var(--l-game--Game-main-dimension)));
     box-sizing: content-box;
     border-radius: inherit;
-    background-color: var(--color-deep-black);
+    background-color: var(--l-game--color-deep-black);
     opacity: 30%;
 }

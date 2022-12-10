@@ -1,42 +1,42 @@
 :root {
-    --PlayerPiece-size: calc(var(--Game-main-dimension) - 2*var(--Board-total-padding));
-    --PlayerPiece-indent: var(--Board-total-padding);
-    --PlayerPiece-Square-size: 25%;
+    --l-game--PlayerPiece-size: calc(var(--l-game--Game-main-dimension) - 2*var(--l-game--Board-total-padding));
+    --l-game--PlayerPiece-indent: var(--l-game--Board-total-padding);
+    --l-game--PlayerPiece-Square-size: 25%;
 }
 
 .PlayerPiece {
     position: absolute;
-    top: var(--PlayerPiece-indent);
-    left: var(--PlayerPiece-indent);
-    width: var(--PlayerPiece-size);
-    height: var(--PlayerPiece-size);
+    top: var(--l-game--PlayerPiece-indent);
+    left: var(--l-game--PlayerPiece-indent);
+    width: var(--l-game--PlayerPiece-size);
+    height: var(--l-game--PlayerPiece-size);
     z-index: -1;
 }
 
 .PlayerPiece-Square {
     position: absolute;
-    width: var(--PlayerPiece-Square-size);
-    height: var(--PlayerPiece-Square-size);
+    width: var(--l-game--PlayerPiece-Square-size);
+    height: var(--l-game--PlayerPiece-Square-size);
     box-sizing: border-box;
 }
 
 .PlayerPiece.player-blue .PlayerPiece-Square {
-    background-color: var(--color-blue-player);
+    background-color: var(--l-game--color-blue-player);
 }
 .PlayerPiece.player-red .PlayerPiece-Square {
-    background-color: var(--color-red-player);
+    background-color: var(--l-game--color-red-player);
 }
 
 .PlayerPiece.faded .PlayerPiece-Square {
     background-color: transparent;
     opacity: 75%;
-    border: calc(0.02 * var(--Game-main-dimension)) solid;
+    border: calc(0.02 * var(--l-game--Game-main-dimension)) solid;
 }
 .PlayerPiece.player-blue.faded .PlayerPiece-Square {
-    border-color: var(--color-blue-player);
+    border-color: var(--l-game--color-blue-player);
 }
 .PlayerPiece.player-red.faded .PlayerPiece-Square {
-    border-color: var(--color-red-player);
+    border-color: var(--l-game--color-red-player);
 }
 .PlayerPiece.faded .PlayerPiece-Square::after {
     content: "";
@@ -48,8 +48,8 @@
     opacity: 50%;
 }
 .PlayerPiece.player-blue.faded .PlayerPiece-Square::after {
-    background-color: var(--color-blue-player);
+    background-color: var(--l-game--color-blue-player);
 }
 .PlayerPiece.player-red.faded .PlayerPiece-Square::after {
-    background-color: var(--color-red-player);
+    background-color: var(--l-game--color-red-player);
 }
