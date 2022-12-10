@@ -1,0 +1,187 @@
+L-Game is a game created by Edward de Bono. While it might appear to be a simple
+board game, it has a surprisingly deep strategy and requires some thinking to
+win, even against a clueless opponent. For this reason, it is one of my favorite
+two-player simple board games.
+
+Article:
+https://en.wikipedia.org/wiki/L_game
+
+Alternative App:
+https://hwwmath.looiwenli.com/l-game
+
+
+This app is a simple board game, thus the driver follows a "state-action-model"
+pattern. This means that the primary method of interacting with the app is to
+register several `on...()` listener functions with the driver module (the
+"action" part). Your listener functions can then call several methods that
+manipulate the game state (the "state" part). Your goal is to change the game
+state correctly for each listener to implement the game. This could require
+defining custom functionality/classes to break the problem down into easier
+chunks (the "model" part).
+
+TYPE LABELS:
+    <player id>: str - A constant that identifies one of the players
+    <move mode>: str - A constant that explains the current type of turn
+        being taken
+    <player position path>: list[dict] - A list that contains exactly four
+        dictionaries, representing the path of an L-piece, with each dictionary
+        containing 'row' and 'col' keys indicating the location of each square
+        of the L-piece (see example: <player position path>)
+    <position>: dict - A dictionary containing 'row' and 'col' keys indicating
+        the location of the position
+
+CONSTANTS:
+    player identification (labeled <player id>):
+        PLAYER_BLUE
+        PLAYER_RED
+        
+    turn types (labeled <move mode>):
+        MOVE_MODE_PLAYER
+        MOVE_MODE_TOKEN
+
+METHODS:
+    setPlayerTurn(player):
+        Changes which player is currently taking their turn.
+
+        player: <player id> - The player who should take their turn
+
+    setMoveMode(moveMode):
+        Changes what kind of move the current player is making.
+
+        moveMode: <move mode> - The type of turn the player should take
+
+    setPlayerBluePosition(positionPath):
+        Sets the position for the blue player's piece.
+
+        positionPath: <player position path> - The path to set the blue player's
+            piece to
+
+    setPlayerRedPosition(positionPath):
+        Sets the position for the red player's piece.
+
+        positionPath: <player position path> - The path to set the red player's
+            piece to
+
+    setToken1Position(position):
+        Sets the position of token 1, a non-player token on the board
+
+        position: <position> - The position on the board to send token 1 to
+
+    setToken2Position(position):
+        Sets the position of token 2, a non-player token on the board
+
+        position: <position> - The position on the board to send token 2 to
+
+    setGameOver(gameOver):
+        Sets the game-over state of the game, bringing up a board-wide modal
+        congratulating the winner.
+
+        gameOver: bool - The indicator for whether or not the game is over
+
+    setWinningPlayer(playerName):
+        Sets the winning player's name to display on the game-over screen.
+
+        playerName: str - The name of the player who won
+
+    onSetActivePlayerPosition(setActivePlayerPositionFn):
+        Registers a listener for when the active player moves their piece.
+
+        setActivePlayerPositionFn: Function(newPositionPath) -  A function
+            reference to use as the callback, given the new position path of the
+            player who just moved their piece
+
+            newPositionPath: <position> - The new position path of the player
+                who just moved their piece
+
+    onSetTokenPiecePosition(setTokenPiecePositionFn):
+        Registers a listener for when the active player either moves one of the
+        non-player token pieces or decides to skip moving a token piece.
+
+        setTokenPiecePositionFn: Function(id, newPosition) - A function
+            reference to use as the callback, given the id of the token that was
+            just moved and the new position of the token
+
+            id: (int | None) - The id of the token that was just moved, or None
+                when the player clicked the "Skip" button
+            newPosition: <position> - The new position of the token that was
+                just moved, unless id is None, causing this value to have
+                undefined behavior
+
+    onResetGame(resetGameFn):
+        Registers a listener for when the user wishes to reset the game.
+
+        resetGameFn: Function() - A callback to use to reset the game's state
+
+EXAMPLES:
+    <player position path>:
+        Consider an L-piece laid out as such:
+
+            ++++
+            +X++
+            +X++
+            +XX+
+
+        This piece could have a <player position path> like such (rows and
+        columns are zero-indexed):
+
+            [
+                {'row': 1, 'col': 1},
+                {'row': 2, 'col': 1},
+                {'row': 3, 'col': 1},
+                {'row': 3, 'col': 2},
+            ]
+
+        Notice that the dictionaries list the locations in an order such that
+        they're adjacent, or "draw" the L-piece. This list is NOT a valid
+        <player position path>:
+
+            [
+                {'row': 3, 'col': 2},
+                {'row': 1, 'col': 1},
+                {'row': 3, 'col': 1},
+                {'row': 2, 'col': 1},
+            ]
+
+        While the path must list locations in order, it does not matter
+        which end of the L-piece the list starts at. This is also valid:
+            
+            [
+                {'row': 3, 'col': 2},
+                {'row': 3, 'col': 1},
+                {'row': 2, 'col': 1},
+                {'row': 1, 'col': 1},
+            ]
+        
+        More examples:
+            ++++
+            +XXX
+            +X++
+            ++++
+            = [
+                {'row': 2, 'col': 1},
+                {'row': 1, 'col': 1},
+                {'row': 1, 'col': 2},
+                {'row': 1, 'col': 3},
+            ]
+
+            +X++
+            +X++
+            XX++
+            ++++
+            = [
+                {'row': 0, 'col': 1},
+                {'row': 1, 'col': 1},
+                {'row': 2, 'col': 1},
+                {'row': 2, 'col': 0},
+            ]
+
+            ++++
+            ++++
+            +X++
+            +XXX
+            = [
+                {'row': 3, 'col': 3},
+                {'row': 3, 'col': 2},
+                {'row': 3, 'col': 1},
+                {'row': 2, 'col': 1},
+            ]
