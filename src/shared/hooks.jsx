@@ -59,13 +59,27 @@ export function useAppState(appApi, appStateConstructor, initStateConstructor = 
 
 export function useAppComponent(appApi, appState, componentFactory) {
     const [isMounted, setIsMounted] = useState(false)
-
+    
+    const [displayNoServer, setDisplayNoServer] = useState(false)
+    const displayNoServerRef = useRef()
+    displayNoServerRef.current = displayNoServer
+    const isMountedRef = useRef()
+    isMountedRef.current = isMounted
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!isMountedRef.current && displayNoServerRef.current === false) {
+                setDisplayNoServer(true)
+            }
+        }, 3000)
+        return () => clearTimeout(timeout)
+    }, [])
+    
     useEffect(() => {
         if (!isMounted && appState !== null) {
             setIsMounted(true)
         }
     }, [isMounted, appState])
-
+    
     const resetComponent = useCallback(() => setIsMounted(false), [])
     
     useEffect(() => {
@@ -74,7 +88,16 @@ export function useAppComponent(appApi, appState, componentFactory) {
     }, [appApi, resetComponent])
 
     const shouldRender = isMounted && appState !== null
-    const component = shouldRender ? componentFactory() : null
+    const component = displayNoServer ?
+        <div>
+            <h2>Can't connect 🤔</h2>
+            <p>
+                Hm... <br />
+                Either your internet is offline, or the server isn't running, <br />
+                because React can't seem to connect to it.
+            </p>
+        </div> : shouldRender ?
+        componentFactory() : null
 
     return [component, resetComponent]
 }
