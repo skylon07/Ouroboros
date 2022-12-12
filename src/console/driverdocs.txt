@@ -2,6 +2,7 @@ This app provides a single interface to interact with an on-screen console.
 The purpose of this app is to allow the user to familiarize themselves with the
 app's driver module using a simple interface.
 
+
 METHODS:
     echo(msg):
         Prints a message to the console.
