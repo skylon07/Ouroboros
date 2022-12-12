@@ -17,7 +17,7 @@ export default function LGameApp() {
         return gameState
     })
 
-    const [gameApp, resetConsoleApp] = useAppComponent(lGameApi, lGameState, () => {
+    const [gameApp, resetLGameApp] = useAppComponent(lGameApi, lGameState, () => {
         return <Game state={lGameState} callApi={callLGameApi} />
     })
     
@@ -25,7 +25,7 @@ export default function LGameApp() {
         <AppHeader docRef={driverDocs} />
         <PyFileUploader
             appApi={lGameApi}
-            onUploadComplete={resetConsoleApp}
+            onUploadComplete={resetLGameApp}
         />
         <AppTitle title="L-Game" />
         <br />
