@@ -23,7 +23,7 @@ TYPE LABELS:
     <player id>: str - A constant that identifies one of the players
     <move mode>: str - A constant that explains the current type of turn
         being taken
-    <player position path>: list[dict] - A list that contains exactly four
+    <player position path>: list[<position>] - A list that contains exactly four
         dictionaries, representing the path of an L-piece, with each dictionary
         containing 'row' and 'col' keys indicating the location of each square
         of the L-piece (see example: <player position path>)
