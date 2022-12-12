@@ -1,0 +1,305 @@
+Dots and boxes is a game that goes by many names. It first appeared in a paper
+by Édouard Lucas, who referred to it as "la pipopipette". While most versions
+include a square/rectangle of dots, this version allows the user to "draw"
+their own boards!
+
+Article:
+https://en.wikipedia.org/wiki/Dots_and_Boxes
+
+Alternative App:
+https://gametable.org/games/dots-and-boxes/
+
+
+This app is a simple board game, thus the driver follows a "state-action-model"
+pattern. This means that the primary method of interacting with the app is to
+register several `on...()` listener functions with the driver module (the
+"action" part). Your listener functions can then call several methods that
+manipulate the game state (the "state" part). Your goal is to change the game
+state correctly for each listener to implement the game. This could require
+defining custom functionality/classes to break the problem down into easier
+chunks (the "model" part).
+
+This app also uses menus. Each menu screen is represented by its own MENU_*
+constant, with MENU_NONE indicating that the menu screen is hidden. Each menu
+can "cancel" a process or "submit" a response. You can look at the documentation
+for "on...()" listeners for menus to see exactly what is sent for each menu
+screen on a "submit". You can also find more info in the examples section.
+
+
+TYPE LABELS:
+    <player id>: str - A constant that identifies one of the players
+    <board element type>: str - A constant identifying a type of board element
+    <menu state>: str - A constant indicating the state of the menu modal
+    <board state>: list[list[<board element state>]] - A 2D list that lays out
+        the game board by its board elements by row (ie the layout you get if
+        you printed the whole list plainly in a console)
+    <board element state>: dict - A dictionary that describes an element on the
+        board, indicating the 'type' (<board element type>) of the element and
+        its 'active' (bool) state.
+    <board shape>: list[list[bool]] - A 2D list representing a map of dots on a
+        board, determining the "shape" of the board (not to be confused with the
+        full board state)
+
+
+CONSTANTS:
+    player identification (labeled <player id>):
+        PLAYER_BLUE
+        PLAYER_RED
+        
+    supported board elements (labeled <board element type>):
+        BOARD_ELEM_DOT
+        BOARD_ELEM_LINE_H
+        BOARD_ELEM_LINE_V
+        BOARD_ELEM_BOX
+
+    menu screens (labeled <menu state>):
+        MENU_EDITOR_ROWS_COLS
+        MENU_EDITOR_BOARD_SHAPE
+        MENU_SELECT_BOARD
+        MENU_CLEAR_CONFIRMATION
+        MENU_NONE
+
+
+METHODS:
+    setPlayerTurn(player):
+        Changes which player is currently taking their turn.
+
+        player: <player id> - The player who should take their turn
+
+    setBoardState(boardState):
+        Updates the state of the board to match a given board state.
+
+        boardState: <board state> - The new state of the board to use
+
+    setGameOver(gameOver):
+        Sets the game-over state of the game, bringing up a board-wide modal
+        congratulating the winner.
+
+        gameOver: bool - The indicator for whether or not the game is over
+    
+    setWinningPlayer(player):
+        Indicates to the application which player won the game.
+
+        player: <player id> - The player who won
+    
+    onSelectBoard(selectBoardFn):
+        Registers a listener for when the user selects a new board to play with.
+
+        selectBoardFn: Function(boardShape) - A callback to use to update the
+            shape of the board
+
+            boardShape: <board shape> - The new shape to use for the game board
+
+    onRecordNewBoard(recordNewBoardFn):
+        Registers a listener for when the user submits a new board in the
+        board editor.
+
+        recordNewBoardFn: Function(newBoardShape) - A callback to use to record
+            a newly created board shape
+
+            newBoardShape: <board shape> - The new shape that was just created
+                by the user
+
+    onResetGame(resetGameFn):
+        Registers a listener for when the user wishes to reset the game.
+
+        resetGameFn: Function() - A callback to use to reset the game's state
+    
+    (menu methods)
+    setMenuState(menuState, menuData = None):
+        Changes or removes the currently active menu in the application. The
+        menus that can be used are:
+        - MENU_EDITOR_ROWS_COLS, which asks the user how many rows/cols to use
+            in the editor menu
+        - MENU_EDITOR_BOARD_SHAPE, which asks the user to "draw" a new board
+            shape, according to menuData, a {'rows': int, 'cols': int}
+            dictionary
+        - MENU_SELECT_BOARD, which asks the user to select a previously created
+            board, according to menuData, a list of <board shape> lists (so
+            technically a 3D list, heh)
+        - MENU_CLEAR_CONFIRMATION, which prompts the user to confirm an action
+            that will clear their current game
+        - MENU_NONE, which removes the currently active menu
+
+        menuState: <menu state> - The menu to display to the user, or MENU_NONE
+            to remove the currently active menu
+        menuData: Any - Menu-specific data to render for the given menu state;
+            see the examples section for concrete uses
+    
+    onActivateEditor(activateEditorFn):
+        Registers a listener to call when the user activates the editor menu.
+
+        activateEditorFn: Function() - A callback to use to display the editor
+
+    onActivateBoardSelector(activateBoardSelectorFn):
+        Registers a listener to call when the user activates the board selection
+        menu.
+
+        activateBoardSelectorFn: Function() - A callback to use to display the
+            board selection menu
+
+    onCancelMenu(cancelMenuFn):
+        Registers a listener to call when the user cancels the current menu.
+
+        cancelMenuFn: Function() - A callback to use when the menu should be
+            cancelled
+    
+    onSubmitMenu(submitMenuFn):
+        Registers a listener to call when the user submits data from the current
+        menu. The data sent on menu submissions for:
+        - MENU_EDITOR_ROWS_COLS is a {'rows': int, 'cols': int} dictionary
+        - MENU_EDITOR_BOARD_SHAPE is a <board shape> list
+        - MENU_SELECT_BOARD is the index (int) of the selected board shape
+        - MENU_CLEAR_CONFIRMATION is None
+        - MENU_NONE is an error, because MENU_NONE shouldn't send any data
+
+        submitMenuFn: Function(menuData) - A callback to use when the user
+            submits data from the menu
+
+            menuData: Any - Menu-specific data representing the submission made
+
+EXAMPLES:
+    MENU_EDITOR_ROWS_COLS:
+         ------------------------------------
+        |        Customize your board        |
+        |                                    |
+        |         (Rows)  X  (Cols)          |
+        |                                    |
+        |        [Submit]    [Cancel]        |
+         ------------------------------------
+
+        (Rows) - Input field
+        (Cols) - Input field
+        [Submit] - Button
+        [Cancel] - Button
+
+        No menu data is required to generate this menu.
+
+        On submission, the menu data returned is a {'rows': int, 'cols': int}
+        dictionary.
+
+        Consider this example menu, configured by the user:
+         ------------------------------------
+        |        Customize your board        |
+        |                                    |
+        |         ( 4  )  X  ( 6  )          |
+        |                                    |
+        |        [Submit]    [Cancel]        |
+         ------------------------------------
+        
+        On submission, the menu data returned would be {'rows': 4, 'cols': 6}.
+
+
+    MENU_EDITOR_BOARD_SHAPE:
+         ------------------------------------
+        |        Customize your board        |
+        |                                    |
+        |                                    |
+        |       (List of [checkbox]es)       |
+        |                                    |
+        |                                    |
+        |        [Submit]    [Cancel]        |
+         ------------------------------------
+        
+        (List of [checkbox]es) - A rectangular field of checkbox buttons
+        [Submit] - Button
+        [Cancel] - Button
+
+        The menu data required to generate this menu is a {'rows': int,
+        'cols': int} dictionary.
+
+        On submission, the menu data returned is a <board shape> list
+
+        Consider this example menu, configured by the user:
+         ------------------------------------
+        |        Customize your board        |
+        |                                    |
+        |      [✓] [✓] [✓] [✓] [ ] [ ]       |
+        |      [✓] [✓] [✓] [✓] [ ] [ ]       |
+        |      [✓] [✓] [✓] [✓] [✓] [✓]       |
+        |      [ ] [ ] [✓] [✓] [✓] [✓]       |
+        |                                    |
+        |        [Submit]    [Cancel]        |
+         ------------------------------------
+        (created with menuData = {'rows': 4, 'cols': 6})
+        
+        On submission, the menu data returned would be:
+        [
+            [True,  True,  True,  True,  False, False],
+            [True,  True,  True,  True,  False, False],
+            [True,  True,  True,  True,  True,  True],
+            [False, False, True,  True,  True,  True],
+        ]
+
+
+    MENU_SELECT_BOARD:
+         ------------------------------------
+        |         Select your board          |
+        |                                    |
+        |    ----------------------------    |
+        |   |                          * |   |
+        |   |                          * |   |
+        |   |   (dots list)  [Select]  * |   |
+        |   |                            |   |
+        |   |                            |   |
+        |    ----------------------------    |
+        |                                    |
+        |              [Cancel]              |
+         ------------------------------------
+
+        Contains a scrollable window repeating these elements:
+            (dots list) - A rectangular list of dots
+            [Select] - Button
+        [Cancel] - Button
+
+        The menu data required to generate this menu is a list of <board shape>
+        lists (so technically a 3D list, heh).
+        
+        On submission, the menu data returned would be the index (as an integer)
+        of the selected <board shape>.
+
+        Consider this example menu:
+         ------------------------------------
+        |         Select your board          |
+        |                                    |
+        |    ----------------------------    |
+        |   |                          * |   |
+        |   |   . . . .                * |   |
+        |   |   . . . .      [Select]  * |   |
+        |   |   . . . . . .              |   |
+        |   |       . . . .              |   |
+        |   |                            |   |
+        |    ----------------------------    |
+        |                                    |
+        |              [Cancel]              |
+         ------------------------------------
+        (created with menuData = [
+            # ... 2 other board shapes
+            [
+                [True,  True,  True,  True,  False, False],
+                [True,  True,  True,  True,  False, False],
+                [True,  True,  True,  True,  True,  True],
+                [False, False, True,  True,  True,  True],
+            ],
+            # ... 3 other board shapes
+        ])
+
+        On submission (of the visible select button), the menu data returned
+        would be 2.
+        
+
+    MENU_CLEAR_CONFIRMATION:
+         ------------------------------------
+        |           Are you sure?            |
+        |                                    |
+        | This will clear your current game! |
+        |                                    |
+        |        [Submit]    [Cancel]        |
+         ------------------------------------
+        
+        [Submit] - Button
+        [Cancel] - Button
+
+        No menu data is required to generate this menu.
+
+        No menu data is returned on submission.
