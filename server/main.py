@@ -4,7 +4,7 @@ import traceback
 from urllib import parse
 from datetime import datetime
 
-from page_apis import apis_by_path
+from app_apis import apis_by_path
 
 
 HOSTNAME = "0.0.0.0"
