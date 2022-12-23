@@ -7,6 +7,7 @@ import axios from 'axios'
 import HomePage from 'home/HomePage'
 import ConsoleApp from 'console/ConsoleApp'
 import LGameApp from 'l-game/LGameApp'
+import DotsAndBoxesApp from 'dots-and-boxes/DotsAndBoxesApp'
 
 import './index.css'
 
@@ -26,6 +27,10 @@ root.render(
                 <Route
                     path='/l-game'
                     element={<LGameApp />}
+                />
+                <Route
+                    path='/dots-and-boxes'
+                    element={<DotsAndBoxesApp />}
                 />
             </Routes>
         </BrowserRouter>

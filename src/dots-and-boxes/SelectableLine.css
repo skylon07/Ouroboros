@@ -1,0 +1,40 @@
+:root {
+    --dots-and-boxes--SelectableLine-thickness: calc(var(--dots-and-boxes--Board-line-size) / 2.5);
+    --dots-and-boxes--SelectableLine-padding: calc((var(--dots-and-boxes--Board-line-size) - var(--dots-and-boxes--SelectableLine-thickness)) / 2);
+}
+
+.SelectableLine.vertical {
+    width: var(--dots-and-boxes--Board-line-size);
+    height: 100%;
+}
+.SelectableLine.vertical .SelectableLine-Bar {
+    transform: translate(0, -1vw);
+    width: var(--dots-and-boxes--SelectableLine-thickness);
+    margin-left: var(--dots-and-boxes--SelectableLine-padding);
+    margin-right: var(--dots-and-boxes--SelectableLine-padding);
+    height: calc(100% + 2vw);
+}
+.SelectableLine.horizontal {
+    flex-grow: 1;
+    height: var(--dots-and-boxes--Board-line-size);
+}
+.SelectableLine.horizontal .SelectableLine-Bar {
+    transform: translate(-1vw, var(--dots-and-boxes--SelectableLine-padding));
+    width: calc(100% + 2vw);
+    height: var(--dots-and-boxes--SelectableLine-thickness);
+}
+
+
+.SelectableLine.selectable:hover .SelectableLine-Bar {
+    opacity: 40%;
+    background-color: var(--dots-and-boxes--color-deep-black);
+}
+
+.SelectableLine.blue-selected .SelectableLine-Bar {
+    /* background-color: var(--dots-and-boxes--color-blue-player-line); */
+    background-color: var(--dots-and-boxes--color-space-gray);
+}
+.SelectableLine.red-selected .SelectableLine-Bar {
+    /* background-color: var(--dots-and-boxes--color-red-player-line); */
+    background-color: var(--dots-and-boxes--color-space-gray);
+}

@@ -1,6 +1,7 @@
 import Link from 'shared/Link'
 
 import icon_lgame from './l-game.png'
+import icon_dotsandboxes from './dots-and-boxes.png'
 
 import './HomePage.css'
 
@@ -49,6 +50,11 @@ export default function HomePage() {
                 <Dot />
                 <Link to="/l-game">L-Game</Link>
                 <Link to="/l-game"><img src={icon_lgame} alt="l-game-icon" /></Link>
+            </li>
+            <li>
+                <Dot />
+                <Link to="/dots-and-boxes">Dots and Boxes</Link>
+                <Link to="/dots-and-boxes"><img src={icon_dotsandboxes} alt="dots-and-boxes-icon" /></Link>
             </li>
         </ul>
         {/* TODO: remove after grading */}

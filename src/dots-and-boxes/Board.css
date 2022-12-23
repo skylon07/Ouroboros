@@ -1,0 +1,31 @@
+:root {
+    --dots-and-boxes--Board-line-size: 0vw; /* dynamically set */
+}
+
+.Board {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 80%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.Board-BoardRow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+}
+.Board-BoardRow.vertical {
+    height: 100%;
+    align-items: center;
+}
+
+.Board.turn-player-blue .SelectableLine.selectable:hover .SelectableLine-Bar {
+    background-color: var(--dots-and-boxes--color-blue-player-line);
+}
+.Board.turn-player-red .SelectableLine.selectable:hover .SelectableLine-Bar {
+    background-color: var(--dots-and-boxes--color-red-player-line);
+}

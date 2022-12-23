@@ -1,0 +1,10 @@
+.DotsAndBoxesApp {
+    --dots-and-boxes--color-soft-white: #e2e0e7;
+    --dots-and-boxes--color-space-gray: #7e828f;
+    --dots-and-boxes--color-deep-black: #232323;
+    --dots-and-boxes--color-deep-black-trans: #232323cc;
+    --dots-and-boxes--color-red-player-line: #e81c1c;
+    --dots-and-boxes--color-blue-player-line: #2369d3;
+    --dots-and-boxes--color-red-player-box: #b51313;
+    --dots-and-boxes--color-blue-player-box: #164ec6;
+  }

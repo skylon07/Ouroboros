@@ -1,0 +1,26 @@
+:root {
+    --dots-and-boxes--FillableBox-offset: calc(-1 * var(--dots-and-boxes--SelectableLine-thickness));
+    --dots-and-boxes--FillableBox-fill-size: calc(100% + 2 * var(--dots-and-boxes--SelectableLine-thickness));
+}
+
+.FillableBox {
+    position: relative;
+    flex-grow: 1;
+    align-self: stretch;
+}
+
+.FillableBox-Fill {
+    position: absolute;
+    top: var(--dots-and-boxes--FillableBox-offset);
+    left: var(--dots-and-boxes--FillableBox-offset);
+    width: var(--dots-and-boxes--FillableBox-fill-size);
+    height: var(--dots-and-boxes--FillableBox-fill-size);
+    z-index: -1;
+}
+
+.FillableBox.blue-filled .FillableBox-Fill {
+    background-color: var(--dots-and-boxes--color-blue-player-box);
+}
+.FillableBox.red-filled .FillableBox-Fill {
+    background-color: var(--dots-and-boxes--color-red-player-box);
+}

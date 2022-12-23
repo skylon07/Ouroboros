@@ -1,0 +1,140 @@
+.ResettableApp {
+    width: 100vw;
+    height: 100vh;
+}
+
+.ResettableApp-EditorButton, .ResettableApp-SelectBoardButton {
+    position: absolute;
+    padding: 0.5vw 1.5vw 0.5vw 1.5vw;
+    border: none;
+    border-radius: 1vw;
+    background-color: var(--dots-and-boxes--color-space-gray);
+    color: var(--dots-and-boxes--color-soft-white);
+    font-size: 1.5vw;
+}
+.ResettableApp-EditorButton {
+    top: 1.5vw;
+    right: 10vw;
+}
+.ResettableApp-SelectBoardButton {
+    top: 1.5vw;
+    right: 1vw;
+}
+.ResettableApp-EditorButton:hover, .ResettableApp-SelectBoardButton:hover {
+    background-color: var(--dots-and-boxes--color-deep-black);
+    color: var(--dots-and-boxes--color-space-gray);
+}
+
+.ResettableApp-Modal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 3vw 0vw 5vw 0vw;
+    box-sizing: border-box;
+    background-color: var(--dots-and-boxes--color-deep-black-trans);
+    color: var(--dots-and-boxes--color-soft-white);
+    font-size: 10vw;
+}
+.ResettableApp-Modal.gameover {
+    justify-content: center;
+}
+
+.ResettableApp-Modal-Spacer {
+    height: 10vw;
+}
+
+.ResettableApp-Modal button {
+    padding: 2vw;
+    border: 1vw solid;
+    border-color: var(--dots-and-boxes--color-space-gray);
+    border-radius: 5vw;
+    box-sizing: border-box;
+    background-color: var(--dots-and-boxes--color-space-gray);
+    color: var(--dots-and-boxes--color-soft-white);
+    font-size: 7vw;
+}
+
+.ResettableApp-Modal button:hover {
+    border-color: var(--dots-and-boxes--color-soft-white);
+}
+
+.ResettableApp-Modal button:active {
+    border-color: var(--dots-and-boxes--color-space-gray);
+    background-color: var(--dots-and-boxes--color-deep-black);
+    color: var(--dots-and-boxes--color-space-gray);
+}
+
+.ResettableApp-Modal-DimensionsInputs input {
+    width: 30vw;
+    background-color: var(--dots-and-boxes--color-soft-white);
+    border: none;
+    text-align: center;
+    font-size: inherit;
+}
+
+.ResettableApp-Modal-BoardInputs {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 80vh;
+}
+
+.ResettableApp-Modal-BoardInputs-Row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResettableApp-Modal-BoardInputs input {
+    /* should be set dynamically */
+    width: 777px;
+    height: 9999px;
+}
+
+.ResettableApp-Modal-BoardSelection {
+    padding: 3vw 3vw 5vw 3vw;
+    width: 80%;
+    height: 60%;
+    box-sizing: border-box;
+    border: 1vw solid var(--dots-and-boxes--color-space-gray);
+    overflow-y: scroll;
+}
+
+.ResettableApp-Modal-BoardShape {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 4vw 2vw 6vw 2vw;
+}
+
+.ResettableApp-Modal-BoardShape button {
+    width: 30vw;
+    scale: 50%;
+}
+
+.ResettableApp-Modal-BoardShape-Row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResettableApp-Modal-BoardShape-Square {
+    margin: 1vw;
+    width: 1vw;
+    height: 1vw;
+}
+.ResettableApp-Modal-BoardShape-Square.filled {
+    background-color: var(--dots-and-boxes--color-soft-white);
+}
