@@ -10,10 +10,10 @@ class ServerApi(ABC):
 
     def __init__(self, apiPath, driver):
         assert apiPath[0] == "/" and apiPath[-1] != "/", "Invalid api path: must start (but not end) with a slash"
-        self._apiPath = apiPath
-        self._driver = driver
-        self._lastRequestDate = None
-        self._logs = []
+        self.__driver = driver
+        self.__apiPath = apiPath
+        self.__lastRequestDate = None
+        self.__logs = []
 
     # overridable methods
     def onGetLogs(self, queryParams):
@@ -29,22 +29,21 @@ class ServerApi(ABC):
     def get(self, queryParams):
         if 'logs' in queryParams:
             self.onGetLogs(queryParams)
-            return self._logs
+            return self.__logs
         else:
             self.onGetFileUpdated(queryParams)
-            return self._lastRequestDate
+            return self.__lastRequestDate
 
     def post(self, queryParams, requestDict):
         self.onPostFile(queryParams, requestDict)
         self.__execPyFile(requestDict['pyfile'])
-        self._lastRequestDate = str(datetime.utcnow())
+        self.__lastRequestDate = str(datetime.utcnow())
 
     def _runInContext(self, execFn):
         oldPath = sys.path
-        sys.path = [f"./{self._apiPath}"]
-        importlib.reload(self._driver)
-        self._driver._syncApi(self)
-
+        importlib.reload(self.__driver)
+        sys.path = [f"./{self.__apiPath}"]
+        self.__driver._syncApi(self)
         globalVars = dict(self._getGlobals())
 
         globalsToDelete = (
@@ -57,8 +56,8 @@ class ServerApi(ABC):
                 del globalVars[globalName]
         
         globalVars['print'] = lambda msg: self.__appendLog("log", str(msg))
+        globalVars['driver'] = self.__driver
         globalVars['input'] = None
-        globalVars['driver'] = self._driver
         
         try:
             if execFn.__code__.co_argcount == 1:
@@ -105,7 +104,7 @@ class ServerApi(ABC):
             'id': ServerApi.__logCount,
         }
         ServerApi.__logCount += 1
-        self._logs.append(newLog)
+        self.__logs.append(newLog)
 
     def __checkFileDataBuiltins(self, fileData):
         badRegexes = [
