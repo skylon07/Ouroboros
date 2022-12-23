@@ -32,7 +32,14 @@ class DotsAndBoxesApi(ServerApi):
             return ValueError("Invalid action path")
 
     def postAction(self, action, queryParams, requestDict):
-        if action == '/board':
+        if action == '/line-select':
+            elementRow = requestDict['elementRow']
+            elementCol = requestDict['elementCol']
+            if self._useDefaultImplementation:
+                self._defaultSelectBoardLine(elementRow, elementCol)
+            else:
+                self._runInContext(lambda: self._selectBoardLine(elementRow, elementCol))
+        elif action == '/board':
             boardShape = requestDict['boardShape']
             if self._useDefaultImplementation:
                 self._defaultSelectBoard(boardShape)
@@ -73,6 +80,9 @@ class DotsAndBoxesApi(ServerApi):
             return ValueError("Invalid action path")
 
     # default implementations
+    def _defaultSelectBoardLine(self, elementRow, elementCol):
+        pass # TODO
+
     def _defaultSelectBoard(self, boardShape):
         pass # TODO
 
@@ -95,6 +105,9 @@ class DotsAndBoxesApi(ServerApi):
         pass # TODO
 
     # overridden implementations
+    def _selectBoardLine(self, elementRow, elementCol):
+        return NotImplemented
+
     def _selectBoard(self, boardShape):
         return NotImplemented
 

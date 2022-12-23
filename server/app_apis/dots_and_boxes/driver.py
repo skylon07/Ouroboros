@@ -47,6 +47,22 @@ def setWinningPlayer(player):
     
     _api._gameState['winningPlayer'] = player
 
+def onSelectBoardLine(selectBoardLineFn):
+    class Class:
+        def method(self):
+            pass
+    
+    if type(selectBoardLineFn) is type(onSelectBoard):
+        if selectBoardLineFn.__code__.co_argcount != 2:
+            raise ValueError("onSelectBoard(selectBoardLineFn) -- selectBoardLineFn should take two arguments")
+    elif type(selectBoardLineFn) is type(Class().method):
+        if selectBoardLineFn.__code__.co_argcount != 3:
+            raise ValueError("onSelectBoard(selectBoardLineFn) -- selectBoardLineFn should take two arguments")
+    else:
+        raise ValueError("onSelectBoard(selectBoardLineFn) -- selectBoardLineFn was not a function")
+
+    _api._selectBoardLine = selectBoardLineFn
+
 def onSelectBoard(selectBoardFn):
     class Class:
         def method(self):

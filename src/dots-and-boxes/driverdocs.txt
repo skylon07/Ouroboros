@@ -81,6 +81,15 @@ METHODS:
         Indicates to the application which player won the game.
 
         player: <player id> - The player who won
+
+    onSelectBoardLine(selectBoardLineFn):
+        Registers a listener for when the current player selects a line to draw.
+
+        selectBoardLineFn: Function(elementRow, elementCol) - A callback to use
+            when the user selects a line (board element)
+        
+            elementRow: int - The first index of the selected line element
+            elementCol: int - The second index of the selected line element
     
     onSelectBoard(selectBoardFn):
         Registers a listener for when the user selects a new board to play with.
