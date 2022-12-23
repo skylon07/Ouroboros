@@ -39,7 +39,7 @@ class ServerApi(ABC):
         self.__execPyFile(requestDict['pyfile'])
         self._lastRequestDate = str(datetime.utcnow())
 
-    def _execInContext(self, execFn):
+    def _runInContext(self, execFn):
         oldPath = sys.path
         sys.path = [f"./{self._apiPath}"]
         importlib.reload(self._driver)
@@ -78,7 +78,7 @@ class ServerApi(ABC):
         def execPyFile(globalVars):
             self.__checkFileDataBuiltins(fileData)
             self._exec_noVarsInContext(fileData, globalVars, None)
-        self._execInContext(execPyFile)
+        self._runInContext(execPyFile)
 
     @abstractmethod
     def _exec_noVarsInContext(self, fileData, globalVars, localVars):
