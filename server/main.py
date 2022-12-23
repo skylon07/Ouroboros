@@ -31,6 +31,9 @@ class ServerHandler(SimpleHTTPRequestHandler):
                 responseObj = api.get(queryParams)
             else:
                 responseObj = api.getAction(actionPath, queryParams)
+            if isinstance(responseObj, Exception):
+                self.send_error_response(responseObj, 400)
+                return
             self.check_response_obj(responseObj)
             
             self.send_response(200)
@@ -39,7 +42,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
 
             self.write_json(responseObj)
         except Exception as error:
-            self.send_error_response(error)
+            self.send_error_response(error, 500)
 
     def do_POST(self):
         print(f"{datestamp()} Server handling POST request to {self.path}")
@@ -56,6 +59,9 @@ class ServerHandler(SimpleHTTPRequestHandler):
                 responseObj = api.post(queryParams, dataDict)
             else:
                 responseObj = api.postAction(actionPath, queryParams, dataDict)
+            if isinstance(responseObj, Exception):
+                self.send_error_response(responseObj, 400, responseObj)
+                return
             self.check_response_obj(responseObj)
 
             self.send_response(200)
@@ -64,7 +70,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
 
             self.write_json(responseObj)
         except Exception as error:
-            self.send_error_response(error)
+            self.send_error_response(error, 500)
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -129,10 +135,17 @@ class ServerHandler(SimpleHTTPRequestHandler):
         jsonBytes = bytes(json.dumps(jsonDict), "utf-8")
         self.wfile.write(jsonBytes)
 
-    def send_error_response(self, error):
+    def send_error_response(self, error, code):
         errorStr = f"{type(error).__name__}: {str(error)}"
-        print(traceback.format_exc())
-        self.send_response(500)
+        print("----ERROR----")
+        if code == 500:
+            print(traceback.format_exc(), end="")
+        elif code == 400:
+            print(f"{type(error).__name__}: {error}")
+        else:
+            print(f"(no statement for code {code})")
+        print("-----END-----")
+        self.send_response(code)
         self.send_cors_headers()
         self.end_headers()
         self.write_json({'error': errorStr})

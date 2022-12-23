@@ -258,6 +258,8 @@ class LGameApi(ServerApi):
     def getAction(self, action, queryParams):
         if action == '/game-state':
             return self._gameState
+        else:
+            return ValueError("Invalid action path")
 
     def postAction(self, action, queryParams, requestDict):
         if action == '/player-position':
@@ -278,6 +280,8 @@ class LGameApi(ServerApi):
                 self._defaultResetGame()
             else:
                 self._runInContext(lambda: self._resetGame())
+        else:
+            return ValueError("Invalid action path")
 
     # default implementations
     def _defaultSetActivePlayerPosition(self, newPositionPath):
