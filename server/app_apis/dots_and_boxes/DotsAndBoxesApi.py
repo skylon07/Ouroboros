@@ -72,10 +72,11 @@ class DotsAndBoxesApi(ServerApi):
             else:
                 self._runInContext(lambda: self._cancelMenu())
         elif action == '/menu-submit':
+            menuData = requestDict['menuData']
             if self._useDefaultImplementation:
-                self._defaultSubmitMenu()
+                self._defaultSubmitMenu(menuData)
             else:
-                self._runInContext(lambda: self._submitMenu())
+                self._runInContext(lambda: self._submitMenu(menuData))
         else:
             return ValueError("Invalid action path")
 
