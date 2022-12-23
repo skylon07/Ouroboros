@@ -53,10 +53,10 @@ def onSelectBoard(selectBoardFn):
             pass
     
     if type(selectBoardFn) is type(onSelectBoard):
-        if selectBoardFn.__code__.co_argcount != 0:
+        if selectBoardFn.__code__.co_argcount != 1:
             raise ValueError("onSelectBoard(selectBoardFn) -- selectBoardFn should take one argument")
     elif type(selectBoardFn) is type(Class().method):
-        if selectBoardFn.__code__.co_argcount != 1:
+        if selectBoardFn.__code__.co_argcount != 2:
             raise ValueError("onSelectBoard(selectBoardFn) -- selectBoardFn should take one argument")
     else:
         raise ValueError("onSelectBoard(selectBoardFn) -- selectBoardFn was not a function")
@@ -163,10 +163,10 @@ def onSubmitMenu(submitMenuFn):
             pass
     
     if type(submitMenuFn) is type(onSubmitMenu):
-        if submitMenuFn.__code__.co_argcount != 0:
+        if submitMenuFn.__code__.co_argcount != 1:
             raise ValueError("onSubmitMenu(submitMenuFn) -- submitMenuFn should take one argument")
     elif type(submitMenuFn) is type(Class().method):
-        if submitMenuFn.__code__.co_argcount != 1:
+        if submitMenuFn.__code__.co_argcount != 2:
             raise ValueError("onSubmitMenu(submitMenuFn) -- submitMenuFn should take one argument")
     else:
         raise ValueError("onSubmitMenu(submitMenuFn) -- submitMenuFn was not a function")
