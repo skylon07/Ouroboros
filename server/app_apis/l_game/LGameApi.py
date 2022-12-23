@@ -256,7 +256,7 @@ class LGameApi(ServerApi):
         self._initGameState()
 
     def getAction(self, action, queryParams):
-        if action == "/game-state":
+        if action == '/game-state':
             return self._gameState
 
     def postAction(self, action, queryParams, requestDict):
