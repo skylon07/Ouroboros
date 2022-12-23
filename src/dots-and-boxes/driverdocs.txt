@@ -35,8 +35,9 @@ TYPE LABELS:
         you printed the whole list plainly in a console)
     <board element state>: dict - A dictionary that describes an element on the
         board, indicating the 'type' (<board element type>) of the element and
-        its 'active' (bool) state (also with an 'activeBy' (<player id>) state
-        when the element is a BOARD_ELEM_BOX).
+        its 'active' (bool) state, indicating whether the element is shown on
+        the board (also with an 'owner' (<player id>) state when the element
+        is a BOARD_ELEM_BOX); see example for <board element state>
     <board shape>: list[list[bool]] - A 2D list representing a map of dots on a
         board, determining the "shape" of the board (not to be confused with the
         full board state)
@@ -72,7 +73,7 @@ METHODS:
 
         boardState: <board state> - The new state of the board to use; remember
             to correctly create each board element state, including using the
-            'activeBy' key for BOARD_ELEM_BOX elements
+            'owner' key for BOARD_ELEM_BOX elements
 
     setGameOver(gameOver):
         Sets the game-over state of the game, bringing up a board-wide modal
@@ -171,6 +172,49 @@ METHODS:
             menuData: Any - Menu-specific data representing the submission made
 
 EXAMPLES:
+    <board element state>:
+        Board element states always contain 'type' and 'active' properties,
+        and in the case of BOARD_ELEM_BOX, also contains an 'owner' property.
+        Explanations for each type and what their properties determine are given
+        below:
+
+        BOARD_ELEM_DOT:
+            elementState = {
+                # tells the page to render a dot element
+                'type': BOARD_ELEM_DOT,
+                # indicates that the dot should be invisible
+                'active': false,
+            }
+
+        BOARD_ELEM_LINE_H:
+            elementState = {
+                # tells the page to render a horizontal clickable line
+                'type': BOARD_ELEM_LINE_H,
+                # indicates that the user can select the element
+                'active': true,
+            }
+
+        BOARD_ELEM_LINE_V:
+            elementState = {
+                # tells the page to render a vertical clickable line
+                'type': BOARD_ELEM_LINE_V,
+                # indicates that the user cannot select the element, rendering
+                # it invisible to the user
+                'active': false,
+            }
+
+        BOARD_ELEM_BOX:
+            elementState = {
+                # tells the page to render a filled box
+                'type': BOARD_ELEM_BOX,
+                # indicates that the box is drawn and visible to the user
+                'active': true,
+                # indicates which player filled the box, determining the
+                # color of the box
+                'owner': PLAYER_BLUE,
+            }
+
+
     MENU_EDITOR_ROWS_COLS:
          ------------------------------------
         |        Customize your board        |
