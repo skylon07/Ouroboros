@@ -20,6 +20,7 @@ def setMoveMode(moveMode):
     
     _api._gameState['moveMode'] = moveMode
 
+# TODO: might be fun to condense these two functions into a setPlayerPosition(player, positionPath)
 def setPlayerBluePosition(positionPath):
     if type(positionPath) not in (list, tuple):
         raise ValueError("setPlayerBluePosition(positionPath) -- positionPath was not a valid <player position path>")
