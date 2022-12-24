@@ -1,4 +1,4 @@
-.time {
+.LGameApp .time {
   font-size: 2rem;
   font-weight: bold;
   color: blue;
@@ -6,7 +6,7 @@
   border-radius: 0.5rem;
   margin: 1rem;
 }
-.time-2 {
+.LGameApp .time-2 {
   font-size: 2rem;
   font-weight: bold;
   color: red;

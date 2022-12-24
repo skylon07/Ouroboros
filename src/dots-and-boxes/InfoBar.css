@@ -10,43 +10,43 @@
     align-items: center;
 }
 
-.InfoBar-Player {
+.DotsAndBoxesApp .InfoBar-Player {
     font-size: 3vw;
     width: 30%;
     border: none;
     text-align: center;
 }
-.InfoBar-Player.player-blue {
+.DotsAndBoxesApp .InfoBar-Player.player-blue {
     color: var(--dots-and-boxes--color-blue-player-box);
 }
-.InfoBar-Player.player-red {
+.DotsAndBoxesApp .InfoBar-Player.player-red {
     color: var(--dots-and-boxes--color-red-player-box);
 }
 
-.InfoBar-Score {
+.DotsAndBoxesApp .InfoBar-Score {
     width: 10%;
     text-align: center;
     font-size: 4.5vw;
 }
-.InfoBar-Score.player-blue {
+.DotsAndBoxesApp .InfoBar-Score.player-blue {
     color: var(--dots-and-boxes--color-blue-player-box);
 }
-.InfoBar-Score.player-red {
+.DotsAndBoxesApp .InfoBar-Score.player-red {
     color: var(--dots-and-boxes--color-red-player-box);
 }
 
-.InfoBar-Turn {
+.DotsAndBoxesApp .InfoBar-Turn {
     width: 5vw;
     height: 5vw;
     border-radius: 2.5vw;
     visibility: hidden;
 }
-.InfoBar-Turn.active {
+.DotsAndBoxesApp .InfoBar-Turn.active {
     visibility: visible;
 }
-.InfoBar-Turn.player-blue {
+.DotsAndBoxesApp .InfoBar-Turn.player-blue {
     background-color: var(--dots-and-boxes--color-blue-player-box);
 }
-.InfoBar-Turn.player-red {
+.DotsAndBoxesApp .InfoBar-Turn.player-red {
     background-color: var(--dots-and-boxes--color-red-player-box);
 }

@@ -7,7 +7,7 @@
     --l-game--Board-total-padding: calc(var(--l-game--Board-extra-padding) + var(--l-game--Board-neg-margin-compensation));
 }
 
-.Board {
+.LGameApp .Board {
     position: absolute;
     left: 0px;
     display: flex;
@@ -17,16 +17,16 @@
     height: 100%;
 }
 
-.Board * {
+.LGameApp .Board * {
     user-select: none;
 }
 
-.Board-Row {
+.LGameApp .Board-Row {
     display: flex;
     flex-flow: row nowrap;
 }
 
-.BoardSquare {
+.LGameApp .BoardSquare {
     margin: var(--l-game--BoardSquare-overlap-compensation);
     width: calc(0.25 * var(--l-game--Game-main-dimension));
     height: calc(0.25 * var(--l-game--Game-main-dimension));
@@ -34,7 +34,7 @@
     border: var(--l-game--BoardSquare-border-size) solid;
 }
 
-.BoardSquare.selected::after {
+.LGameApp .BoardSquare.selected::after {
     content: "";
     display: inline-block;
     width: 100%;
@@ -42,14 +42,14 @@
     background-color: var(--l-game--color-deep-black);
     opacity: 36%;
 }
-.Board.player-blue.mode-player .BoardSquare.selected::after {
+.LGameApp .Board.player-blue.mode-player .BoardSquare.selected::after {
     background-color: var(--l-game--color-blue-player);
 }
-.Board.player-red.mode-player .BoardSquare.selected::after {
+.LGameApp .Board.player-red.mode-player .BoardSquare.selected::after {
     background-color: var(--l-game--color-red-player);
 }
 
-.Board-Skip-Container {
+.LGameApp .Board-Skip-Container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,7 +58,7 @@
     box-sizing: border-box;
 }
 
-.Board-Skip {
+.LGameApp .Board-Skip {
     position: relative;
     opacity: 50%;
     width: calc(0.20 * var(--l-game--Game-main-dimension));
@@ -67,24 +67,24 @@
     border-radius: calc(0.02 * var(--l-game--Game-main-dimension));
     font-size: calc(0.04 * var(--l-game--Game-main-dimension));
 }
-.Board-Skip.hidden {
+.LGameApp .Board-Skip.hidden {
     visibility: hidden;
 }
 
-.Board.player-blue .Board-Skip {
+.LGameApp .Board.player-blue .Board-Skip {
     background-color: var(--l-game--color-blue-player);
 }
-.Board.player-red .Board-Skip {
+.LGameApp .Board.player-red .Board-Skip {
     background-color: var(--l-game--color-red-player);
 }
-.Board .Board-Skip:hover {
+.LGameApp .Board .Board-Skip:hover {
     opacity: 80%;
 }
-.Board .Board-Skip:active {
+.LGameApp .Board .Board-Skip:active {
     background-color: var(--l-game--color-space-gray);
 }
 
-.Board-Skip::after {
+.LGameApp .Board-Skip::after {
     content: "";
     position: absolute;
     top: 0px;

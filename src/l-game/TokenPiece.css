@@ -3,17 +3,17 @@
     --l-game--TokenPiece-indent: var(--l-game--PlayerPiece-indent);
 }
 
-.TokenPiece {
+.LGameApp .TokenPiece {
     position: absolute;
     width: var(--l-game--TokenPiece-size);
     height: var(--l-game--TokenPiece-size);
 }
 
-.TokenPiece.pickedUp {
+.LGameApp .TokenPiece.pickedUp {
     opacity: 90%;
 }
 
-.TokenPiece .MouseControlledSection {
+.LGameApp .TokenPiece .MouseControlledSection {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@
     height: 100%;
 }
 
-.TokenPiece-Circle {
+.LGameApp .TokenPiece-Circle {
     width: 80%;
     height: 80%;
     box-sizing: border-box;
@@ -29,14 +29,14 @@
     border-radius: 50%;
 }
 
-.TokenPiece.pickedUp .TokenPiece-Circle {
+.LGameApp .TokenPiece.pickedUp .TokenPiece-Circle {
     border: calc(0.01 * var(--l-game--Game-main-dimension)) solid var(--l-game--color-deep-black);
     position: relative;
     top: -calc(0.02 * var(--l-game--Game-main-dimension));
     left: -calc(0.02 * var(--l-game--Game-main-dimension));
 }
 
-.TokenPiece.pickedUp .TokenPiece-Circle::after {
+.LGameApp .TokenPiece.pickedUp .TokenPiece-Circle::after {
     content: "";
     z-index: -1;
     position: absolute;

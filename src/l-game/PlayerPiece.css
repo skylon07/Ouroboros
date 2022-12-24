@@ -4,7 +4,7 @@
     --l-game--PlayerPiece-Square-size: 25%;
 }
 
-.PlayerPiece {
+.LGameApp .PlayerPiece {
     position: absolute;
     top: var(--l-game--PlayerPiece-indent);
     left: var(--l-game--PlayerPiece-indent);
@@ -13,32 +13,32 @@
     z-index: -1;
 }
 
-.PlayerPiece-Square {
+.LGameApp .PlayerPiece-Square {
     position: absolute;
     width: var(--l-game--PlayerPiece-Square-size);
     height: var(--l-game--PlayerPiece-Square-size);
     box-sizing: border-box;
 }
 
-.PlayerPiece.player-blue .PlayerPiece-Square {
+.LGameApp .PlayerPiece.player-blue .PlayerPiece-Square {
     background-color: var(--l-game--color-blue-player);
 }
-.PlayerPiece.player-red .PlayerPiece-Square {
+.LGameApp .PlayerPiece.player-red .PlayerPiece-Square {
     background-color: var(--l-game--color-red-player);
 }
 
-.PlayerPiece.faded .PlayerPiece-Square {
+.LGameApp .PlayerPiece.faded .PlayerPiece-Square {
     background-color: transparent;
     opacity: 75%;
     border: calc(0.02 * var(--l-game--Game-main-dimension)) solid;
 }
-.PlayerPiece.player-blue.faded .PlayerPiece-Square {
+.LGameApp .PlayerPiece.player-blue.faded .PlayerPiece-Square {
     border-color: var(--l-game--color-blue-player);
 }
-.PlayerPiece.player-red.faded .PlayerPiece-Square {
+.LGameApp .PlayerPiece.player-red.faded .PlayerPiece-Square {
     border-color: var(--l-game--color-red-player);
 }
-.PlayerPiece.faded .PlayerPiece-Square::after {
+.LGameApp .PlayerPiece.faded .PlayerPiece-Square::after {
     content: "";
     position: absolute;
     top: 0px;
@@ -47,9 +47,9 @@
     height: 100%;
     opacity: 50%;
 }
-.PlayerPiece.player-blue.faded .PlayerPiece-Square::after {
+.LGameApp .PlayerPiece.player-blue.faded .PlayerPiece-Square::after {
     background-color: var(--l-game--color-blue-player);
 }
-.PlayerPiece.player-red.faded .PlayerPiece-Square::after {
+.LGameApp .PlayerPiece.player-red.faded .PlayerPiece-Square::after {
     background-color: var(--l-game--color-red-player);
 }

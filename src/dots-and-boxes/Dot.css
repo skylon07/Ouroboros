@@ -1,10 +1,10 @@
-.Dot {
+.DotsAndBoxesApp .Dot {
     width: var(--dots-and-boxes--Board-line-size);
     height: var(--dots-and-boxes--Board-line-size);
     border-radius: var(--dots-and-boxes--Board-line-size);
     z-index: 10;
 }
 
-.Dot.filled {
+.DotsAndBoxesApp .Dot.filled {
     background-color: var(--dots-and-boxes--color-deep-black);
 }
