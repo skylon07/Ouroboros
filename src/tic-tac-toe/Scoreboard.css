@@ -1,0 +1,45 @@
+:root {
+    --tic-tac-toe--Scoreboard-elem-size: calc(0.1 * var(--l-game--Game-main-dimension));
+    --tic-tac-toe--Scoreboard-border-size: calc(0.0128 * var(--l-game--Game-main-dimension));
+}
+
+.Scoreboard {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: var(--tic-tac-toe--Scoreboard-elem-size);
+}
+
+.Scoreboard-Spacer {
+    flex: 1;
+}
+
+.player-ex {
+    color: red;
+}
+.player-oh {
+    color: blue;
+}
+
+.Scoreboard-Player {
+    width: var(--tic-tac-toe--Scoreboard-elem-size);
+    height: var(--tic-tac-toe--Scoreboard-elem-size);
+    box-sizing: border-box;
+    font-size: calc(0.6 * var(--tic-tac-toe--Scoreboard-elem-size));
+    font-weight: bold;
+    text-align: center;
+    border: var(--tic-tac-toe--Scoreboard-border-size) solid rgba(0, 0, 0, 0);
+    border-radius: 25%;
+}
+.Scoreboard-Player.active-player {
+    border: var(--tic-tac-toe--Scoreboard-border-size) solid gray;
+}
+
+.Scoreboard-Score {
+    width: var(--tic-tac-toe--Scoreboard-elem-size);
+    height: var(--tic-tac-toe--Scoreboard-elem-size);
+    font-size: calc(0.8 * var(--tic-tac-toe--Scoreboard-elem-size));
+    text-align: center;
+}

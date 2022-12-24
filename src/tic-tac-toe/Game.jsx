@@ -26,7 +26,7 @@ export default function Game({state, callApi}) {
 
     return <div className="Game">
         <Scoreboard scores={score} turn={playerTurn} />
-        <Board state={boardState} onSelectSquare={selectSquare} />
+        <Board state={boardState} currPlayer={playerTurn} onSelectSquare={selectSquare} />
         {gameOver ?
             <div className="Game-GameOver">
                 {`${winningPlayer} won!`}

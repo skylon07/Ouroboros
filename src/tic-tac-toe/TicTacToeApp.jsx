@@ -30,5 +30,11 @@ export default function TicTacToeApp() {
         <AppTitle title="Tic Tac Toe" />
         <br />
         {gameApp}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
     </div>
 }

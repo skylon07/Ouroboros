@@ -1,0 +1,72 @@
+:root {
+    --tic-tac-toe--Square-size: calc(0.30 * var(--l-game--Game-main-dimension));
+}
+
+.TicTacToeApp .Board {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+}
+
+.TicTacToeApp .Board * {
+    user-select: none;
+}
+
+.TicTacToeApp .Board-Row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.TicTacToeApp .Board-Square {
+    position: relative;
+    width: var(--tic-tac-toe--Square-size);
+    height: var(--tic-tac-toe--Square-size);
+    background-color: white;
+}
+
+.TicTacToeApp .Board-Square:not(.player-ex, .player-oh):hover::after {
+    content: "";
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    opacity: 12%;
+    background-color: grey;
+    border-radius: 50%;
+}
+
+.TicTacToeApp .Board-Square:not(.player-ex, .player-oh):hover:active::after {
+    opacity: 28%;
+}
+
+.TicTacToeApp .Board.player-oh .Board-Square::after {
+    background-color: blue;
+}
+.TicTacToeApp .Board.player-ex .Board-Square::after {
+    background-color: red;
+}
+
+.TicTacToeApp .Board-Square svg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-transparent);
+    stroke-width: 10%;
+    fill: none;
+    opacity: 0%;
+}
+.TicTacToeApp .Board-Square.player-oh svg.circle {
+    opacity: 100%;
+    stroke: blue;
+}
+.TicTacToeApp .Board-Square.player-ex svg.cross {
+    opacity: 100%;
+    stroke: red;
+}
