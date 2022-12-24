@@ -1,0 +1,74 @@
+Everyone knows the game Tic Tac Toe. You might know it by the name "Noughts and
+Crosses" or "Xs and Os", but these are all names for the same, classic game.
+This game has very simple strategy and a (relatively) simple implementation.
+This game is a great place to start in Ouroboros!
+
+Article:
+https://en.wikipedia.org/wiki/Tic-tac-toe
+
+Alternative App: Just a google search away!
+https://www.google.com/search?q=tic+tac+toe
+
+
+This app is a simple board game, thus the driver follows a "state-action-model"
+pattern. This means that the primary method of interacting with the app is to
+register several `on...()` listener functions with the driver module (the
+"action" part). Your listener functions can then call several methods that
+manipulate the game state (the "state" part). Your goal is to change the game
+state correctly for each listener to implement the game. This could require
+defining custom functionality/classes to break the problem down into easier
+chunks (the "model" part).
+
+
+TYPE LABELS:
+    <player id>: str - A constant that identifies one of the players
+    <board state>: list[list[<player id> | None]] - A 2D list that defines the
+        tic tac toe board by each row and indicates what squares are owned by
+        which players
+    <position>: dict - A dictionary containing 'row' and 'col' keys indicating
+        the location of the position
+
+
+CONSTANTS:
+    player identification (labeled <player id>):
+        PLAYER_EX
+        PLAYER_OH
+
+
+METHODS:
+    setPlayerTurn(player):
+        Changes which player is currently taking their turn.
+
+        player: <player id> - The player who should take their turn
+
+    setPlayerScore(player, score):
+        Changes the score for a given player
+
+        player: <player id> - The player's score to update
+        score: int - The new score for the player
+
+    setBoardState(boardState):
+        Updates the state of the board to match a given board state.
+
+        boardState: <board state> - The new state of the board to use
+
+    setGameOver(gameOver):
+        Sets the game-over state of the game, bringing up a board-wide modal
+        congratulating the winner.
+
+        gameOver: bool - The indicator for whether or not the game is over
+
+    setWinningPlayer(player):
+        Sets the player who won the game.
+
+        playerName: <player id> | None - The player who won, or None for ties
+
+    onSelectSquare(selectSquareFn):
+        Registers a callback to use when a square on the board is selected
+        by the player.
+
+        selectSquareFn: Function(position) - A callback to use when a square
+            is selected
+
+            position: <position> - The position of the square selected
+        
