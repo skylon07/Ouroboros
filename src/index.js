@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import HomePage from 'home/HomePage'
 import ConsoleApp from 'console/ConsoleApp'
+import TicTacToeApp from 'tic-tac-toe/TicTacToeApp'
 import LGameApp from 'l-game/LGameApp'
 import DotsAndBoxesApp from 'dots-and-boxes/DotsAndBoxesApp'
 
@@ -23,6 +24,10 @@ root.render(
                 <Route
                     path='/console'
                     element={<ConsoleApp />}
+                />
+                <Route
+                    path='/tic-tac-toe'
+                    element={<TicTacToeApp />}
                 />
                 <Route
                     path='/l-game'

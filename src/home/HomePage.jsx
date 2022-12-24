@@ -1,5 +1,6 @@
 import Link from 'shared/Link'
 
+import icon_tictactoe from './tic-tac-toe.png'
 import icon_lgame from './l-game.png'
 import icon_dotsandboxes from './dots-and-boxes.png'
 
@@ -45,6 +46,11 @@ export default function HomePage() {
            <li>
                 <Dot />
                 <Link to="/console">Echo Console</Link>
+            </li>
+            <li>
+                <Dot />
+                <Link to="/tic-tac-toe">Tic Tac Toe</Link>
+                <Link to="/tic-tac-toe"><img src={icon_tictactoe} alt="tic-tac-toe-icon" /></Link>
             </li>
             <li>
                 <Dot />
