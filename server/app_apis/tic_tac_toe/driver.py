@@ -63,3 +63,19 @@ def onSelectSquare(selectSquareFn):
         raise ValueError("onSelectSquare(selectSquareFn) -- selectSquareFn was not a function")
     
     _api._selectSquare = selectSquareFn
+
+def onResetGame(resetGameFn):
+    class Class:
+        def method(self):
+            pass
+    
+    if type(resetGameFn) is type(onResetGame):
+        if resetGameFn.__code__.co_argcount != 0:
+            raise ValueError("onResetGame(resetGameFn) -- resetGameFn should take no arguments")
+    elif type(resetGameFn) is type(Class().method):
+        if resetGameFn.__code__.co_argcount != 1:
+            raise ValueError("onResetGame(resetGameFn) -- resetGameFn should take no arguments")
+    else:
+        raise ValueError("onResetGame(resetGameFn) -- resetGameFn was not a function")
+    
+    _api._resetGame = resetGameFn

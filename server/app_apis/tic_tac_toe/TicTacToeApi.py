@@ -9,7 +9,7 @@ class TicTacToeApi(ServerApi):
         self._gameState = None
         self._initGameState()
         driver._syncApi(self)
-        self._defaultHelper_initGame()
+        self._defaultResetGame()
 
     def _initGameState(self):
         self._gameState = {
@@ -40,6 +40,11 @@ class TicTacToeApi(ServerApi):
                 self._defaultSelectSquare(position)
             else:
                 self._runInContext(lambda: self._selectSquare(position))
+        elif action == '/reset':
+            if self._useDefaultImplementation:
+                self._defaultResetGame()
+            else:
+                self._runInContext(lambda: self._resetGame())
         else:
             return ValueError("Invalid action path")
 
@@ -47,11 +52,14 @@ class TicTacToeApi(ServerApi):
     def _defaultSelectSquare(self, position):
         pass # TODO
 
-    def _defaultHelper_initGame(self):
+    def _defaultResetGame(self):
         pass # TODO
 
     # overridden implementations
     def _selectSquare(self, position):
+        return NotImplemented
+
+    def _resetGame(self):
         return NotImplemented
 
     # required subclass method overrides

@@ -71,4 +71,9 @@ METHODS:
             is selected
 
             position: <position> - The position of the square selected
+
+    onResetGame(resetGameFn):
+        Registers a listener for when the user wishes to reset the game.
+
+        resetGameFn: Function() - A callback to use to reset the game's state
         
