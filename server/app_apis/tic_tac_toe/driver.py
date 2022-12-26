@@ -43,8 +43,8 @@ def setGameOver(gameOver):
     _api._gameState['gameOver'] = gameOver
 
 def setWinningPlayer(player):
-    if player not in (PLAYER_EX, PLAYER_OH):
-        raise ValueError("setWinningPlayer(player) -- player was not a valid <player id>")
+    if player not in (PLAYER_EX, PLAYER_OH, None):
+        raise ValueError("setWinningPlayer(player) -- player was not a valid <player id> or None")
     
     _api._gameState['winningPlayer'] = player
 
