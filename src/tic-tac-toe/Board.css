@@ -1,5 +1,5 @@
 :root {
-    --tic-tac-toe--Square-size: calc(0.30 * var(--l-game--Game-main-dimension));
+    --tic-tac-toe--Square-size: calc(0.30 * var(--tic-tac-toe--Game-main-dimension));
 }
 
 .TicTacToeApp .Board {

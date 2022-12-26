@@ -29,13 +29,14 @@ export default function Board({state, currPlayer, onSelectSquare}) {
                     </svg>,
             }[player]
             return <div
+                key={`${rowIdx},${colIdx}`}
                 className={`Board-Square ${playerClass}`}
                 onClick={selectSquare}
             >
                 {svg}
             </div>
         })
-        return <div className="Board-Row">
+        return <div key={rowIdx} className="Board-Row">
             {elements}
         </div>
     })

@@ -1,6 +1,8 @@
 import Board from './Board'
 import Scoreboard from './Scoreboard'
 
+import { Player } from './gamestate'
+
 import './Game.css'
 
 export default function Game({state, callApi}) {
@@ -24,12 +26,18 @@ export default function Game({state, callApi}) {
         })
     }
 
+    const winningPlayerName = {
+        [Player.PLAYER_EX]: "Player 1 (✕s)",
+        [Player.PLAYER_OH]: "Player 2 (Os)",
+        [null]: "Nobody",
+    }[winningPlayer]
+
     return <div className="Game">
         <Scoreboard scores={score} turn={playerTurn} />
         <Board state={boardState} currPlayer={playerTurn} onSelectSquare={selectSquare} />
         {gameOver ?
             <div className="Game-GameOver">
-                {`${winningPlayer} won!`}
+                {`${winningPlayerName} won!`}
                 <button onClick={resetGame}>Play again?</button>
             </div>
             :

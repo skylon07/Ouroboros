@@ -1,11 +1,11 @@
 :root {
-    --l-game--Game-main-dimension: min(90vw, 80vh);
+    --tic-tac-toe--Game-main-dimension: min(90vw, 80vh);
 }
 
 .TicTacToeApp .Game {
     position: relative;
-    width: var(--l-game--Game-main-dimension);
-    height: var(--l-game--Game-main-dimension);
+    width: var(--tic-tac-toe--Game-main-dimension);
+    height: var(--tic-tac-toe--Game-main-dimension);
 }
 
 .TicTacToeApp .Game-GameOver {
@@ -17,31 +17,31 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: var(--l-game--Game-main-dimension);
-    height: var(--l-game--Game-main-dimension);
-    background-color: var(--l-game--color-deep-black-trans);
-    color: var(--l-game--color-soft-white);
-    font-size: calc(0.1 * var(--l-game--Game-main-dimension));
+    width: var(--tic-tac-toe--Game-main-dimension);
+    height: calc(var(--tic-tac-toe--Game-main-dimension) + var(--tic-tac-toe--Scoreboard-elem-size) + var(--tic-tac-toe--Scoreboard-padding-size));
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: calc(0.1 * var(--tic-tac-toe--Game-main-dimension));
 }
 
 .TicTacToeApp .Game-GameOver button {
-    margin-top: calc(0.1 * var(--l-game--Game-main-dimension));
-    padding: calc(0.02 * var(--l-game--Game-main-dimension));
-    border: calc(0.01 * var(--l-game--Game-main-dimension)) solid;
-    border-color: var(--l-game--color-space-gray);
-    border-radius: calc(0.05 * var(--l-game--Game-main-dimension));
+    margin-top: calc(0.1 * var(--tic-tac-toe--Game-main-dimension));
+    padding: calc(0.02 * var(--tic-tac-toe--Game-main-dimension));
+    border: calc(0.01 * var(--tic-tac-toe--Game-main-dimension)) solid;
+    border-color: #6f7381;
+    border-radius: calc(0.05 * var(--tic-tac-toe--Game-main-dimension));
     box-sizing: border-box;
-    background-color: var(--l-game--color-space-gray);
-    color: var(--l-game--color-soft-white);
-    font-size: calc(0.07 * var(--l-game--Game-main-dimension));
+    background-color: #6f7381;
+    color: white;
+    font-size: calc(0.07 * var(--tic-tac-toe--Game-main-dimension));
 }
 
 .TicTacToeApp .Game-GameOver button:hover {
-    border-color: var(--l-game--color-soft-white);
+    border-color: white;
 }
 
 .TicTacToeApp .Game-GameOver button:active {
-    border-color: var(--l-game--color-space-gray);
-    background-color: var(--l-game--color-deep-black);
-    color: var(--l-game--color-space-gray);
+    border-color: #6f7381;
+    background-color: black;
+    color: #6f7381;
 }
